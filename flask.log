@@ -1,0 +1,18 @@
+==================================================
+TMU Library Seat Tracker - Backend Server
+==================================================
+Starting server at http://localhost:5000
+API endpoints:
+  GET  /api/floors              - Get floor configs
+  GET  /api/floors/<n>/seats    - Get seats for floor
+  GET  /api/floors/<n>/rooms    - Get rooms for floor
+  POST /api/seats/book          - Book a seat
+  POST /api/rooms/book          - Book a room
+  GET  /api/bookings            - Get bookings
+  DELETE /api/bookings/<id>     - Cancel booking
+  GET  /api/stats               - Get statistics
+==================================================
+ * Serving Flask app 'app'
+ * Debug mode: on
+Address already in use
+Port 5001 is in use by another program. Either identify and stop that program, or start the server with a different port.

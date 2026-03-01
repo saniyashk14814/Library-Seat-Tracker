@@ -22,11 +22,58 @@ body {
 }
 
 header {
-  padding: 16px 20px;
+  padding: 12px 20px;
   border-bottom: 1px solid #1f2937;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background: linear-gradient(135deg, #002D5F 0%, #004A9F 100%);
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.tmu-logo {
+  height: 40px;
+  width: auto;
+  filter: brightness(0) invert(1);
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.user-bookings {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 13px;
+}
+
+.user-bookings:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.booking-icon {
+  font-size: 16px;
+}
+
+#bookingCount {
+  font-weight: 600;
+  background: var(--accent);
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 12px;
 }
 
 h1 {
@@ -540,4 +587,260 @@ footer {
   color: var(--muted);
   font-size: 12px;
   text-align: center;
+}
+
+/* Seat Booking Modal */
+.seat-modal-content {
+  max-width: 500px;
+}
+
+.seat-modal-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.seat-icon-large {
+  font-size: 48px;
+  margin-bottom: 8px;
+}
+
+.seat-modal-header h2 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.seat-info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.seat-info-item {
+  background: var(--card);
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #243244;
+}
+
+.info-label {
+  display: block;
+  font-size: 11px;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.info-value {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.duration-section {
+  margin-bottom: 16px;
+}
+
+.duration-section h4 {
+  margin: 0 0 12px 0;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.duration-options {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.duration-btn {
+  padding: 10px 8px;
+  background: var(--card);
+  border: 1px solid #243244;
+  border-radius: 8px;
+  color: var(--text);
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.duration-btn:hover {
+  border-color: var(--accent);
+}
+
+.duration-btn.selected {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+}
+
+.booking-summary {
+  background: rgba(34, 197, 94, 0.1);
+  border: 1px solid var(--available);
+  border-radius: 10px;
+  padding: 14px;
+  margin-top: 16px;
+}
+
+.booking-summary h4 {
+  margin: 0 0 8px 0;
+  font-size: 13px;
+  color: var(--available);
+}
+
+.booking-summary p {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text);
+}
+
+/* My Bookings Modal */
+.bookings-modal-content {
+  max-width: 550px;
+}
+
+.bookings-list {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.booking-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px;
+  background: var(--card);
+  border-radius: 10px;
+  border: 1px solid #243244;
+  margin-bottom: 10px;
+}
+
+.booking-item-info {
+  flex: 1;
+}
+
+.booking-item-type {
+  font-size: 11px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+
+.booking-item-name {
+  font-weight: 600;
+  font-size: 15px;
+  margin-bottom: 4px;
+}
+
+.booking-item-details {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.cancel-booking {
+  padding: 8px 14px;
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid var(--occupied);
+  border-radius: 6px;
+  color: var(--occupied);
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.cancel-booking:hover {
+  background: var(--occupied);
+  color: white;
+}
+
+.no-bookings {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--muted);
+}
+
+.no-bookings-icon {
+  font-size: 48px;
+  margin-bottom: 12px;
+}
+
+.close-seat-modal,
+.close-bookings-modal {
+  float: right;
+  font-size: 24px;
+  cursor: pointer;
+  color: var(--muted);
+  line-height: 1;
+}
+
+.close-seat-modal:hover,
+.close-bookings-modal:hover {
+  color: var(--text);
+}
+
+/* Toast Notification */
+.toast {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background: var(--panel);
+  border: 1px solid #243244;
+  border-radius: 12px;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+  z-index: 2000;
+  animation: slideIn 0.3s ease;
+}
+
+.toast.success {
+  border-color: var(--available);
+}
+
+.toast.error {
+  border-color: var(--occupied);
+}
+
+.toast-icon {
+  font-size: 24px;
+}
+
+.toast-message {
+  font-size: 14px;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Interactive Seat Hover Effects */
+.seat {
+  position: relative;
+}
+
+.seat.available::after {
+  content: 'Click to book';
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 9px;
+  color: var(--available);
+  opacity: 0;
+  transition: opacity 0.2s;
+  white-space: nowrap;
+}
+
+.seat.available:hover::after {
+  opacity: 1;
 }

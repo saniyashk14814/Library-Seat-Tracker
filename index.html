@@ -10,8 +10,18 @@
 
 <body>
   <header>
-    <h1>TMU Library Seat Tracker</h1>
-    <div id="currentFloor">Floor: 2</div>
+    <div class="header-left">
+      <img src="https://www.torontomu.ca/content/dam/tmul/images/TMU_CMYK_Primary_Logo.svg" alt="TMU Logo"
+        class="tmu-logo" onerror="this.style.display='none'">
+      <h1>Library Seat Tracker</h1>
+    </div>
+    <div class="header-right">
+      <div id="userBookings" class="user-bookings">
+        <span class="booking-icon">📋</span>
+        <span id="bookingCount">0</span> Bookings
+      </div>
+      <div id="currentFloor">Floor: 2</div>
+    </div>
   </header>
 
   <div class="container">
@@ -77,8 +87,65 @@
     </div>
   </div>
 
+  <div id="seatModal" class="modal" style="display:none;">
+    <div class="modal-content seat-modal-content">
+      <span class="close-seat-modal">&times;</span>
+      <div class="seat-modal-header">
+        <div class="seat-icon-large">🪑</div>
+        <h2 id="seatModalTitle">Reserve Seat</h2>
+      </div>
+      <div class="seat-modal-body">
+        <div class="seat-info-grid">
+          <div class="seat-info-item">
+            <span class="info-label">Seat Number</span>
+            <span id="seatNumber" class="info-value"></span>
+          </div>
+          <div class="seat-info-item">
+            <span class="info-label">Zone Type</span>
+            <span id="seatZone" class="info-value"></span>
+          </div>
+          <div class="seat-info-item">
+            <span class="info-label">Floor</span>
+            <span id="seatFloor" class="info-value"></span>
+          </div>
+          <div class="seat-info-item">
+            <span class="info-label">Amenities</span>
+            <span id="seatAmenities" class="info-value"></span>
+          </div>
+        </div>
+        <div class="duration-section">
+          <h4>Select Duration:</h4>
+          <div class="duration-options">
+            <button class="duration-btn" data-duration="1">1 Hour</button>
+            <button class="duration-btn" data-duration="2">2 Hours</button>
+            <button class="duration-btn" data-duration="3">3 Hours</button>
+            <button class="duration-btn" data-duration="4">4 Hours</button>
+          </div>
+        </div>
+        <div class="time-slots">
+          <h4>Select Start Time:</h4>
+          <div id="seatTimeSlots" class="time-slots-grid"></div>
+        </div>
+        <div class="booking-summary" id="seatBookingSummary" style="display:none;">
+          <h4>Booking Summary</h4>
+          <p id="summaryText"></p>
+        </div>
+        <button id="confirmSeatBooking" class="btn-confirm" disabled>Reserve Seat</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="myBookingsModal" class="modal" style="display:none;">
+    <div class="modal-content bookings-modal-content">
+      <span class="close-bookings-modal">&times;</span>
+      <h2>📋 My Bookings</h2>
+      <div id="bookingsList" class="bookings-list"></div>
+    </div>
+  </div>
+
   <footer>TMU Library • Click available seat/room to reserve • Reservations persist per floor</footer>
 
+  <script src="api.js"></script>
   <script src="script.js"></script>
 </body>
 

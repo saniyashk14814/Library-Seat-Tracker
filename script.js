@@ -112,7 +112,7 @@ const studyRoomsConfig = {
   ]
 };
 
-// Generate seats for a floor
+// Generate seats for a floor (fallback if API unavailable)
 function generateSeats(floor) {
   const config = floorConfig[floor];
   const arr = [];
@@ -120,45 +120,114 @@ function generateSeats(floor) {
     arr.push({
       id: i,
       zone: config.zones[i % config.zones.length],
-      status: Math.random() > 0.7 ? "occupied" : "available"
+      status: "available"
     });
   }
   return arr;
 }
 
-// Generate study rooms with random availability
+// Generate study rooms with availability
 function generateStudyRooms(floor) {
   if (!studyRoomsConfig[floor]) return [];
   return studyRoomsConfig[floor].map(room => ({
     ...room,
-    status: Math.random() > 0.6 ? (Math.random() > 0.5 ? "occupied" : "reserved") : "available",
-    bookedSlots: generateRandomBookedSlots()
+    status: "available",
+    bookedSlots: []
   }));
-}
-
-// Generate random booked time slots
-function generateRandomBookedSlots() {
-  const slots = [];
-  const possibleSlots = ["9:00 AM", "10:00 AM", "11:00 AM", "12:00 PM", "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM"];
-  possibleSlots.forEach(slot => {
-    if (Math.random() > 0.6) slots.push(slot);
-  });
-  return slots;
 }
 
 // Initialize floor data
 const floors = {};
 const studyRooms = {};
-for (let i = 2; i <= 10; i++) {
-  floors[i] = generateSeats(i);
-  if (floorConfig[i].hasStudyRooms) {
-    studyRooms[i] = generateStudyRooms(i);
+
+// Backend status
+let backendAvailable = false;
+
+// Initialize data from API or local fallback
+async function initializeData() {
+  try {
+    // Check if backend is available
+    backendAvailable = await LibraryAPI.checkBackendHealth();
+
+    if (backendAvailable) {
+      console.log('Backend connected - using API');
+      // Load data from API
+      for (let i = 2; i <= 10; i++) {
+        floors[i] = await LibraryAPI.getFloorSeats(i);
+        if (floorConfig[i].hasStudyRooms) {
+          studyRooms[i] = await LibraryAPI.getFloorRooms(i);
+        }
+      }
+      // Load user bookings from API
+      userBookings = await LibraryAPI.getUserBookings();
+    } else {
+      console.log('Backend unavailable - using local storage');
+      // Use local generation
+      for (let i = 2; i <= 10; i++) {
+        floors[i] = generateSeats(i);
+        if (floorConfig[i].hasStudyRooms) {
+          studyRooms[i] = generateStudyRooms(i);
+        }
+      }
+      // Load from localStorage
+      userBookings = JSON.parse(localStorage.getItem('tmuLibraryBookings')) || [];
+    }
+
+    updateBookingCount();
+    render();
+  } catch (error) {
+    console.error('Error initializing data:', error);
+    backendAvailable = false;
+    // Fallback to local
+    for (let i = 2; i <= 10; i++) {
+      floors[i] = generateSeats(i);
+      if (floorConfig[i].hasStudyRooms) {
+        studyRooms[i] = generateStudyRooms(i);
+      }
+    }
+    userBookings = JSON.parse(localStorage.getItem('tmuLibraryBookings')) || [];
+    updateBookingCount();
+    render();
   }
 }
 
 let currentFloor = 2;
 let selectedRoom = null;
 let selectedTimeSlot = null;
+let selectedSeat = null;
+let selectedDuration = null;
+let selectedSeatTimeSlot = null;
+
+// User bookings storage
+let userBookings = [];
+
+// Save bookings (API or localStorage fallback)
+async function saveBookings() {
+  if (!backendAvailable) {
+    localStorage.setItem('tmuLibraryBookings', JSON.stringify(userBookings));
+  }
+  updateBookingCount();
+}
+
+// Refresh bookings from API
+async function refreshBookings() {
+  if (backendAvailable) {
+    try {
+      userBookings = await LibraryAPI.getUserBookings();
+      updateBookingCount();
+    } catch (error) {
+      console.error('Error refreshing bookings:', error);
+    }
+  }
+}
+
+// Update booking count in header
+function updateBookingCount() {
+  const countEl = document.getElementById('bookingCount');
+  if (countEl) {
+    countEl.textContent = userBookings.length;
+  }
+}
 
 // DOM elements
 const grid = document.getElementById("seatGrid");
@@ -171,6 +240,12 @@ const studyRoomsGrid = document.getElementById("studyRoomsGrid");
 const modal = document.getElementById("bookingModal");
 const closeModal = document.querySelector(".close-modal");
 const confirmBooking = document.getElementById("confirmBooking");
+const seatModal = document.getElementById("seatModal");
+const closeSeatModal = document.querySelector(".close-seat-modal");
+const confirmSeatBooking = document.getElementById("confirmSeatBooking");
+const myBookingsModal = document.getElementById("myBookingsModal");
+const closeBookingsModal = document.querySelector(".close-bookings-modal");
+const userBookingsBtn = document.getElementById("userBookings");
 
 // Floor-specific map layouts based on TMU floor plans
 const floorMaps = {
@@ -435,23 +510,321 @@ window.onclick = (e) => {
     selectedRoom = null;
     selectedTimeSlot = null;
   }
-};
-
-// Confirm booking
-confirmBooking.onclick = () => {
-  if (selectedRoom && selectedTimeSlot) {
-    const room = studyRooms[currentFloor].find(r => r.id === selectedRoom.id);
-    if (room) {
-      room.bookedSlots.push(selectedTimeSlot);
-      room.status = "reserved";
-      renderStudyRooms();
-    }
-    modal.style.display = "none";
-    selectedRoom = null;
-    selectedTimeSlot = null;
-    alert(`✅ Successfully booked ${selectedRoom?.name || 'room'} for ${selectedTimeSlot}!`);
+  if (e.target === seatModal) {
+    closeSeatBookingModal();
+  }
+  if (e.target === myBookingsModal) {
+    myBookingsModal.style.display = "none";
   }
 };
+
+// Confirm room booking
+confirmBooking.onclick = async () => {
+  if (selectedRoom && selectedTimeSlot) {
+    try {
+      if (backendAvailable) {
+        // Use API
+        const result = await LibraryAPI.bookRoom(currentFloor, selectedRoom.id, selectedTimeSlot);
+        userBookings.push(result.booking);
+
+        // Refresh room data from API
+        studyRooms[currentFloor] = await LibraryAPI.getFloorRooms(currentFloor);
+      } else {
+        // Local fallback
+        const room = studyRooms[currentFloor].find(r => r.id === selectedRoom.id);
+        if (room) {
+          room.bookedSlots.push(selectedTimeSlot);
+          room.status = "reserved";
+
+          userBookings.push({
+            id: Date.now(),
+            type: 'room',
+            name: room.name,
+            floor: currentFloor,
+            time: selectedTimeSlot,
+            duration: '1 hour',
+            bookedAt: new Date().toISOString()
+          });
+        }
+      }
+
+      await saveBookings();
+      renderStudyRooms();
+      modal.style.display = "none";
+      showToast('success', `Successfully booked ${selectedRoom?.name || 'room'} for ${selectedTimeSlot}!`);
+    } catch (error) {
+      showToast('error', error.message || 'Failed to book room');
+    }
+
+    selectedRoom = null;
+    selectedTimeSlot = null;
+  }
+};
+
+// Show toast notification
+function showToast(type, message) {
+  const existing = document.querySelector('.toast');
+  if (existing) existing.remove();
+
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+  toast.innerHTML = `
+    <span class="toast-icon">${type === 'success' ? '✅' : '❌'}</span>
+    <span class="toast-message">${message}</span>
+  `;
+  document.body.appendChild(toast);
+
+  setTimeout(() => toast.remove(), 4000);
+}
+
+// Open seat booking modal
+function openSeatBookingModal(seat) {
+  selectedSeat = seat;
+  selectedDuration = null;
+  selectedSeatTimeSlot = null;
+
+  document.getElementById('seatNumber').textContent = `S${seat.id}`;
+  document.getElementById('seatZone').textContent = seat.zone;
+  document.getElementById('seatFloor').textContent = `Floor ${currentFloor}`;
+
+  // Get amenities based on zone
+  const amenities = getZoneAmenities(seat.zone);
+  document.getElementById('seatAmenities').textContent = amenities;
+
+  // Reset duration buttons
+  document.querySelectorAll('.duration-btn').forEach(btn => {
+    btn.classList.remove('selected');
+    btn.onclick = () => selectDuration(Number(btn.dataset.duration), btn);
+  });
+
+  // Render time slots
+  renderSeatTimeSlots();
+
+  // Hide booking summary
+  document.getElementById('seatBookingSummary').style.display = 'none';
+  confirmSeatBooking.disabled = true;
+
+  seatModal.style.display = 'flex';
+}
+
+// Get amenities based on zone type
+function getZoneAmenities(zone) {
+  const amenitiesMap = {
+    'Desktop': 'Power Outlet, Computer',
+    'Computer': 'Power Outlet, Desktop Computer',
+    'Group': 'Power Outlet, Large Table',
+    'Individual': 'Power Outlet, Desk Lamp',
+    'Quiet': 'Power Outlet, Privacy Screen',
+    'Carrel': 'Power Outlet, Privacy Walls',
+    'Silent': 'Power Outlet, Complete Privacy',
+    'Window': 'Power Outlet, Natural Light',
+    'Lab': 'Computer, Software Suite',
+    'Open': 'Power Outlet, Flexible Seating'
+  };
+  return amenitiesMap[zone] || 'Power Outlet';
+}
+
+// Select duration
+function selectDuration(hours, btnEl) {
+  selectedDuration = hours;
+  document.querySelectorAll('.duration-btn').forEach(btn => btn.classList.remove('selected'));
+  btnEl.classList.add('selected');
+  updateSeatBookingSummary();
+}
+
+// Render seat time slots
+function renderSeatTimeSlots() {
+  const container = document.getElementById('seatTimeSlots');
+  const allSlots = ['8:00 AM', '9:00 AM', '10:00 AM', '11:00 AM', '12:00 PM', '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM', '6:00 PM', '7:00 PM'];
+
+  // Randomly mark some as booked
+  const bookedSlots = allSlots.filter(() => Math.random() > 0.7);
+
+  container.innerHTML = '';
+  allSlots.forEach(slot => {
+    const isBooked = bookedSlots.includes(slot);
+    const div = document.createElement('div');
+    div.className = `time-slot ${isBooked ? 'unavailable' : ''}`;
+    div.textContent = slot;
+
+    if (!isBooked) {
+      div.onclick = () => {
+        document.querySelectorAll('#seatTimeSlots .time-slot').forEach(s => s.classList.remove('selected'));
+        div.classList.add('selected');
+        selectedSeatTimeSlot = slot;
+        updateSeatBookingSummary();
+      };
+    }
+
+    container.appendChild(div);
+  });
+}
+
+// Update seat booking summary
+function updateSeatBookingSummary() {
+  const summaryEl = document.getElementById('seatBookingSummary');
+  const summaryText = document.getElementById('summaryText');
+
+  if (selectedDuration && selectedSeatTimeSlot) {
+    const endTime = calculateEndTime(selectedSeatTimeSlot, selectedDuration);
+    summaryText.innerHTML = `
+      <strong>Seat S${selectedSeat.id}</strong> on Floor ${currentFloor}<br>
+      📅 Today • ⏰ ${selectedSeatTimeSlot} - ${endTime} (${selectedDuration} ${selectedDuration === 1 ? 'hour' : 'hours'})
+    `;
+    summaryEl.style.display = 'block';
+    confirmSeatBooking.disabled = false;
+  } else {
+    summaryEl.style.display = 'none';
+    confirmSeatBooking.disabled = true;
+  }
+}
+
+// Calculate end time
+function calculateEndTime(startTime, hours) {
+  const [time, period] = startTime.split(' ');
+  let [hour] = time.split(':').map(Number);
+
+  if (period === 'PM' && hour !== 12) hour += 12;
+  if (period === 'AM' && hour === 12) hour = 0;
+
+  hour += hours;
+
+  const newPeriod = hour >= 12 && hour < 24 ? 'PM' : 'AM';
+  if (hour >= 12) hour = hour > 12 ? hour - 12 : hour;
+  if (hour === 0) hour = 12;
+
+  return `${hour}:00 ${newPeriod}`;
+}
+
+// Close seat booking modal
+function closeSeatBookingModal() {
+  seatModal.style.display = 'none';
+  selectedSeat = null;
+  selectedDuration = null;
+  selectedSeatTimeSlot = null;
+}
+
+closeSeatModal.onclick = closeSeatBookingModal;
+
+// Confirm seat booking
+confirmSeatBooking.onclick = async () => {
+  if (selectedSeat && selectedDuration && selectedSeatTimeSlot) {
+    try {
+      if (backendAvailable) {
+        // Use API
+        const result = await LibraryAPI.bookSeat(currentFloor, selectedSeat.id, selectedDuration, selectedSeatTimeSlot);
+        userBookings.push(result.booking);
+
+        // Refresh seat data from API
+        floors[currentFloor] = await LibraryAPI.getFloorSeats(currentFloor);
+      } else {
+        // Local fallback
+        const seat = floors[currentFloor].find(s => s.id === selectedSeat.id);
+        if (seat) {
+          seat.status = 'reserved';
+
+          userBookings.push({
+            id: Date.now(),
+            type: 'seat',
+            name: `Seat S${seat.id}`,
+            floor: currentFloor,
+            zone: seat.zone,
+            time: selectedSeatTimeSlot,
+            duration: `${selectedDuration} ${selectedDuration === 1 ? 'hour' : 'hours'}`,
+            endTime: calculateEndTime(selectedSeatTimeSlot, selectedDuration),
+            bookedAt: new Date().toISOString()
+          });
+        }
+      }
+
+      await saveBookings();
+      renderSeats();
+      closeSeatBookingModal();
+      showToast('success', `Seat S${selectedSeat?.id} reserved for ${selectedSeatTimeSlot}!`);
+    } catch (error) {
+      showToast('error', error.message || 'Failed to book seat');
+      closeSeatBookingModal();
+    }
+  }
+};
+
+// My Bookings Modal
+userBookingsBtn.onclick = () => {
+  renderMyBookings();
+  myBookingsModal.style.display = 'flex';
+};
+
+closeBookingsModal.onclick = () => {
+  myBookingsModal.style.display = 'none';
+};
+
+// Render my bookings
+function renderMyBookings() {
+  const list = document.getElementById('bookingsList');
+
+  if (userBookings.length === 0) {
+    list.innerHTML = `
+      <div class="no-bookings">
+        <div class="no-bookings-icon">📭</div>
+        <p>No bookings yet</p>
+        <p style="font-size: 12px;">Book a seat or study room to see it here</p>
+      </div>
+    `;
+    return;
+  }
+
+  list.innerHTML = userBookings.map(booking => `
+    <div class="booking-item">
+      <div class="booking-item-info">
+        <div class="booking-item-type">${booking.type === 'seat' ? '🪑 Seat' : '📚 Study Room'}</div>
+        <div class="booking-item-name">${booking.name}</div>
+        <div class="booking-item-details">
+          Floor ${booking.floor} • ${booking.time} - ${booking.endTime || ''} (${booking.duration})
+        </div>
+      </div>
+      <button class="cancel-booking" onclick="cancelBooking(${booking.id})">Cancel</button>
+    </div>
+  `).join('');
+}
+
+// Cancel booking
+async function cancelBooking(bookingId) {
+  const booking = userBookings.find(b => b.id === bookingId);
+  if (booking) {
+    try {
+      if (backendAvailable) {
+        // Use API
+        await LibraryAPI.cancelBooking(bookingId);
+
+        // Refresh data from API
+        userBookings = await LibraryAPI.getUserBookings();
+        floors[booking.floor] = await LibraryAPI.getFloorSeats(booking.floor);
+        if (floorConfig[booking.floor].hasStudyRooms) {
+          studyRooms[booking.floor] = await LibraryAPI.getFloorRooms(booking.floor);
+        }
+      } else {
+        // Local fallback
+        userBookings = userBookings.filter(b => b.id !== bookingId);
+
+        // Update seat/room status back to available
+        if (booking.type === 'seat') {
+          const seat = floors[booking.floor].find(s => s.id === parseInt(booking.name.replace('Seat S', '')));
+          if (seat) seat.status = 'available';
+        } else {
+          const room = studyRooms[booking.floor]?.find(r => r.name === booking.name);
+          if (room) room.status = 'available';
+        }
+      }
+
+      await saveBookings();
+      renderMyBookings();
+      render();
+      showToast('success', `Cancelled booking for ${booking.name}`);
+    } catch (error) {
+      showToast('error', error.message || 'Failed to cancel booking');
+    }
+  }
+}
 
 // Render seats
 function renderSeats() {
@@ -464,11 +837,18 @@ function renderSeats() {
 
     div.onclick = () => {
       if (seat.status === "available") {
-        seat.status = "reserved";
+        openSeatBookingModal(seat);
       } else if (seat.status === "reserved") {
-        seat.status = "available";
+        // Check if user owns this booking
+        const userOwns = userBookings.some(b =>
+          b.type === 'seat' &&
+          b.floor === currentFloor &&
+          b.name === `Seat S${seat.id}`
+        );
+        if (userOwns) {
+          showToast('error', 'Use "My Bookings" to cancel your reservation');
+        }
       }
-      renderSeats();
     };
 
     grid.appendChild(div);
@@ -498,5 +878,5 @@ document.querySelectorAll("[data-floor]").forEach(btn => {
   });
 });
 
-// Initial render
-render();
+// Initial data load
+initializeData();

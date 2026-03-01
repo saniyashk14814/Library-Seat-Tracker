@@ -1,0 +1,2174 @@
+{
+  "floors": {
+    "2": {
+      "seats": [
+        {
+          "id": 1,
+          "zone": "Group",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 2,
+          "zone": "Individual",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 3,
+          "zone": "Desktop",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 4,
+          "zone": "Group",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 5,
+          "zone": "Individual",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 6,
+          "zone": "Desktop",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 7,
+          "zone": "Group",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 8,
+          "zone": "Individual",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 9,
+          "zone": "Desktop",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 10,
+          "zone": "Group",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 11,
+          "zone": "Individual",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 12,
+          "zone": "Desktop",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 13,
+          "zone": "Group",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 14,
+          "zone": "Individual",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 15,
+          "zone": "Desktop",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 16,
+          "zone": "Group",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 17,
+          "zone": "Individual",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 18,
+          "zone": "Desktop",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 19,
+          "zone": "Group",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 20,
+          "zone": "Individual",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 21,
+          "zone": "Desktop",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 22,
+          "zone": "Group",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 23,
+          "zone": "Individual",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 24,
+          "zone": "Desktop",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 25,
+          "zone": "Group",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 26,
+          "zone": "Individual",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 27,
+          "zone": "Desktop",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 28,
+          "zone": "Group",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 29,
+          "zone": "Individual",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 30,
+          "zone": "Desktop",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 31,
+          "zone": "Group",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 32,
+          "zone": "Individual",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 33,
+          "zone": "Desktop",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 34,
+          "zone": "Group",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 35,
+          "zone": "Individual",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 36,
+          "zone": "Desktop",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 37,
+          "zone": "Group",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 38,
+          "zone": "Individual",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 39,
+          "zone": "Desktop",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 40,
+          "zone": "Group",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        }
+      ]
+    },
+    "3": {
+      "seats": [
+        {
+          "id": 1,
+          "zone": "Carrel",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 2,
+          "zone": "Lab",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 3,
+          "zone": "Computer",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 4,
+          "zone": "Carrel",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 5,
+          "zone": "Lab",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 6,
+          "zone": "Computer",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 7,
+          "zone": "Carrel",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 8,
+          "zone": "Lab",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 9,
+          "zone": "Computer",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 10,
+          "zone": "Carrel",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 11,
+          "zone": "Lab",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 12,
+          "zone": "Computer",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 13,
+          "zone": "Carrel",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 14,
+          "zone": "Lab",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 15,
+          "zone": "Computer",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 16,
+          "zone": "Carrel",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 17,
+          "zone": "Lab",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 18,
+          "zone": "Computer",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 19,
+          "zone": "Carrel",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 20,
+          "zone": "Lab",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 21,
+          "zone": "Computer",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 22,
+          "zone": "Carrel",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 23,
+          "zone": "Lab",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 24,
+          "zone": "Computer",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 25,
+          "zone": "Carrel",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 26,
+          "zone": "Lab",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 27,
+          "zone": "Computer",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 28,
+          "zone": "Carrel",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 29,
+          "zone": "Lab",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 30,
+          "zone": "Computer",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 31,
+          "zone": "Carrel",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 32,
+          "zone": "Lab",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 33,
+          "zone": "Computer",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 34,
+          "zone": "Carrel",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 35,
+          "zone": "Lab",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        }
+      ]
+    },
+    "4": {
+      "seats": [
+        {
+          "id": 1,
+          "zone": "Group",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 2,
+          "zone": "Window",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 3,
+          "zone": "Individual",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 4,
+          "zone": "Group",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 5,
+          "zone": "Window",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 6,
+          "zone": "Individual",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 7,
+          "zone": "Group",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 8,
+          "zone": "Window",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 9,
+          "zone": "Individual",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 10,
+          "zone": "Group",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 11,
+          "zone": "Window",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 12,
+          "zone": "Individual",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 13,
+          "zone": "Group",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 14,
+          "zone": "Window",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 15,
+          "zone": "Individual",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 16,
+          "zone": "Group",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 17,
+          "zone": "Window",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 18,
+          "zone": "Individual",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 19,
+          "zone": "Group",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 20,
+          "zone": "Window",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 21,
+          "zone": "Individual",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 22,
+          "zone": "Group",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 23,
+          "zone": "Window",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 24,
+          "zone": "Individual",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 25,
+          "zone": "Group",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 26,
+          "zone": "Window",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 27,
+          "zone": "Individual",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 28,
+          "zone": "Group",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        }
+      ]
+    },
+    "5": {
+      "seats": [
+        {
+          "id": 1,
+          "zone": "Carrel",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 2,
+          "zone": "Group",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 3,
+          "zone": "Quiet",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 4,
+          "zone": "Carrel",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 5,
+          "zone": "Group",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 6,
+          "zone": "Quiet",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 7,
+          "zone": "Carrel",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 8,
+          "zone": "Group",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 9,
+          "zone": "Quiet",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 10,
+          "zone": "Carrel",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 11,
+          "zone": "Group",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 12,
+          "zone": "Quiet",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 13,
+          "zone": "Carrel",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 14,
+          "zone": "Group",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 15,
+          "zone": "Quiet",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 16,
+          "zone": "Carrel",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 17,
+          "zone": "Group",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 18,
+          "zone": "Quiet",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 19,
+          "zone": "Carrel",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 20,
+          "zone": "Group",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 21,
+          "zone": "Quiet",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 22,
+          "zone": "Carrel",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 23,
+          "zone": "Group",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 24,
+          "zone": "Quiet",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 25,
+          "zone": "Carrel",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 26,
+          "zone": "Group",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 27,
+          "zone": "Quiet",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 28,
+          "zone": "Carrel",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 29,
+          "zone": "Group",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 30,
+          "zone": "Quiet",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        }
+      ]
+    },
+    "6": {
+      "seats": [
+        {
+          "id": 1,
+          "zone": "Carrel",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 2,
+          "zone": "Computer",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 3,
+          "zone": "Quiet",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 4,
+          "zone": "Carrel",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 5,
+          "zone": "Computer",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 6,
+          "zone": "Quiet",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 7,
+          "zone": "Carrel",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 8,
+          "zone": "Computer",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 9,
+          "zone": "Quiet",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 10,
+          "zone": "Carrel",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 11,
+          "zone": "Computer",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 12,
+          "zone": "Quiet",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 13,
+          "zone": "Carrel",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 14,
+          "zone": "Computer",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 15,
+          "zone": "Quiet",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 16,
+          "zone": "Carrel",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 17,
+          "zone": "Computer",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 18,
+          "zone": "Quiet",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 19,
+          "zone": "Carrel",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 20,
+          "zone": "Computer",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 21,
+          "zone": "Quiet",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 22,
+          "zone": "Carrel",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 23,
+          "zone": "Computer",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 24,
+          "zone": "Quiet",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 25,
+          "zone": "Carrel",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 26,
+          "zone": "Computer",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 27,
+          "zone": "Quiet",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 28,
+          "zone": "Carrel",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 29,
+          "zone": "Computer",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 30,
+          "zone": "Quiet",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 31,
+          "zone": "Carrel",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 32,
+          "zone": "Computer",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        }
+      ]
+    },
+    "7": {
+      "seats": [
+        {
+          "id": 1,
+          "zone": "Carrel",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 2,
+          "zone": "Window",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 3,
+          "zone": "Quiet",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 4,
+          "zone": "Carrel",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 5,
+          "zone": "Window",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 6,
+          "zone": "Quiet",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 7,
+          "zone": "Carrel",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 8,
+          "zone": "Window",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 9,
+          "zone": "Quiet",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 10,
+          "zone": "Carrel",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 11,
+          "zone": "Window",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 12,
+          "zone": "Quiet",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 13,
+          "zone": "Carrel",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 14,
+          "zone": "Window",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 15,
+          "zone": "Quiet",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 16,
+          "zone": "Carrel",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 17,
+          "zone": "Window",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 18,
+          "zone": "Quiet",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 19,
+          "zone": "Carrel",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 20,
+          "zone": "Window",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 21,
+          "zone": "Quiet",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 22,
+          "zone": "Carrel",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 23,
+          "zone": "Window",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 24,
+          "zone": "Quiet",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 25,
+          "zone": "Carrel",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 26,
+          "zone": "Window",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 27,
+          "zone": "Quiet",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 28,
+          "zone": "Carrel",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        }
+      ]
+    },
+    "8": {
+      "seats": [
+        {
+          "id": 1,
+          "zone": "Carrel",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 2,
+          "zone": "Open",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 3,
+          "zone": "Group",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 4,
+          "zone": "Carrel",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 5,
+          "zone": "Open",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 6,
+          "zone": "Group",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 7,
+          "zone": "Carrel",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 8,
+          "zone": "Open",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 9,
+          "zone": "Group",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 10,
+          "zone": "Carrel",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 11,
+          "zone": "Open",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 12,
+          "zone": "Group",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 13,
+          "zone": "Carrel",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 14,
+          "zone": "Open",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 15,
+          "zone": "Group",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 16,
+          "zone": "Carrel",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 17,
+          "zone": "Open",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 18,
+          "zone": "Group",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 19,
+          "zone": "Carrel",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 20,
+          "zone": "Open",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 21,
+          "zone": "Group",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 22,
+          "zone": "Carrel",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 23,
+          "zone": "Open",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 24,
+          "zone": "Group",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 25,
+          "zone": "Carrel",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 26,
+          "zone": "Open",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        }
+      ]
+    },
+    "9": {
+      "seats": [
+        {
+          "id": 1,
+          "zone": "Carrel",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 2,
+          "zone": "Group",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 3,
+          "zone": "Quiet",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 4,
+          "zone": "Carrel",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 5,
+          "zone": "Group",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 6,
+          "zone": "Quiet",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 7,
+          "zone": "Carrel",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 8,
+          "zone": "Group",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 9,
+          "zone": "Quiet",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 10,
+          "zone": "Carrel",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 11,
+          "zone": "Group",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 12,
+          "zone": "Quiet",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 13,
+          "zone": "Carrel",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 14,
+          "zone": "Group",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 15,
+          "zone": "Quiet",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 16,
+          "zone": "Carrel",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 17,
+          "zone": "Group",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 18,
+          "zone": "Quiet",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 19,
+          "zone": "Carrel",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 20,
+          "zone": "Group",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 21,
+          "zone": "Quiet",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 22,
+          "zone": "Carrel",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 23,
+          "zone": "Group",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 24,
+          "zone": "Quiet",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        }
+      ]
+    },
+    "10": {
+      "seats": [
+        {
+          "id": 1,
+          "zone": "Carrel",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 2,
+          "zone": "Individual",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 3,
+          "zone": "Silent",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 4,
+          "zone": "Carrel",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 5,
+          "zone": "Individual",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 6,
+          "zone": "Silent",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 7,
+          "zone": "Carrel",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 8,
+          "zone": "Individual",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 9,
+          "zone": "Silent",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 10,
+          "zone": "Carrel",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 11,
+          "zone": "Individual",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 12,
+          "zone": "Silent",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 13,
+          "zone": "Carrel",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 14,
+          "zone": "Individual",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 15,
+          "zone": "Silent",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 16,
+          "zone": "Carrel",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 17,
+          "zone": "Individual",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 18,
+          "zone": "Silent",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 19,
+          "zone": "Carrel",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        },
+        {
+          "id": 20,
+          "zone": "Individual",
+          "status": "available",
+          "bookedBy": null,
+          "bookingExpires": null
+        }
+      ]
+    }
+  },
+  "study_rooms": {
+    "5": [
+      {
+        "id": "LIB-550",
+        "name": "LIB 550",
+        "capacity": 6,
+        "features": [
+          "Whiteboard",
+          "Power Outlets",
+          "Group Table"
+        ],
+        "status": "available",
+        "bookedSlots": []
+      },
+      {
+        "id": "LIB-551",
+        "name": "LIB 551",
+        "capacity": 6,
+        "features": [
+          "Whiteboard",
+          "Power Outlets",
+          "Group Table"
+        ],
+        "status": "available",
+        "bookedSlots": []
+      },
+      {
+        "id": "LIB-552",
+        "name": "LIB 552",
+        "capacity": 6,
+        "features": [
+          "Whiteboard",
+          "Power Outlets",
+          "Group Table"
+        ],
+        "status": "available",
+        "bookedSlots": []
+      },
+      {
+        "id": "LIB-554",
+        "name": "LIB 554",
+        "capacity": 4,
+        "features": [
+          "Whiteboard",
+          "Power Outlets"
+        ],
+        "status": "available",
+        "bookedSlots": []
+      },
+      {
+        "id": "LIB-555",
+        "name": "LIB 555",
+        "capacity": 4,
+        "features": [
+          "Whiteboard",
+          "Power Outlets"
+        ],
+        "status": "available",
+        "bookedSlots": []
+      },
+      {
+        "id": "LIB-556",
+        "name": "LIB 556",
+        "capacity": 4,
+        "features": [
+          "Whiteboard",
+          "Power Outlets"
+        ],
+        "status": "available",
+        "bookedSlots": []
+      }
+    ],
+    "6": [
+      {
+        "id": "LIB-605A",
+        "name": "LIB 605A",
+        "capacity": 6,
+        "features": [
+          "Whiteboard",
+          "Power Outlets",
+          "Group Table"
+        ],
+        "status": "available",
+        "bookedSlots": []
+      },
+      {
+        "id": "LIB-605B",
+        "name": "LIB 605B",
+        "capacity": 6,
+        "features": [
+          "Whiteboard",
+          "Power Outlets",
+          "Group Table"
+        ],
+        "status": "available",
+        "bookedSlots": []
+      },
+      {
+        "id": "LIB-605C",
+        "name": "LIB 605C",
+        "capacity": 4,
+        "features": [
+          "Whiteboard",
+          "Power Outlets"
+        ],
+        "status": "available",
+        "bookedSlots": []
+      }
+    ],
+    "7": [
+      {
+        "id": "LIB-701",
+        "name": "LIB 701",
+        "capacity": 6,
+        "features": [
+          "Whiteboard",
+          "Power Outlets",
+          "Group Table"
+        ],
+        "status": "available",
+        "bookedSlots": []
+      },
+      {
+        "id": "LIB-702",
+        "name": "LIB 702",
+        "capacity": 6,
+        "features": [
+          "Whiteboard",
+          "Power Outlets",
+          "Group Table"
+        ],
+        "status": "available",
+        "bookedSlots": []
+      },
+      {
+        "id": "LIB-703",
+        "name": "LIB 703",
+        "capacity": 4,
+        "features": [
+          "Whiteboard",
+          "Power Outlets"
+        ],
+        "status": "available",
+        "bookedSlots": []
+      }
+    ],
+    "8": [
+      {
+        "id": "LIB-805",
+        "name": "LIB 805",
+        "capacity": 8,
+        "features": [
+          "Whiteboard",
+          "TV Display",
+          "Group Table",
+          "Accessible"
+        ],
+        "status": "available",
+        "bookedSlots": []
+      },
+      {
+        "id": "LIB-805A",
+        "name": "LIB 805A",
+        "capacity": 6,
+        "features": [
+          "Whiteboard",
+          "Power Outlets"
+        ],
+        "status": "available",
+        "bookedSlots": []
+      },
+      {
+        "id": "LIB-805B",
+        "name": "LIB 805B",
+        "capacity": 6,
+        "features": [
+          "Whiteboard",
+          "Power Outlets"
+        ],
+        "status": "available",
+        "bookedSlots": []
+      },
+      {
+        "id": "LIB-805C",
+        "name": "LIB 805C",
+        "capacity": 6,
+        "features": [
+          "Whiteboard",
+          "Power Outlets"
+        ],
+        "status": "available",
+        "bookedSlots": []
+      },
+      {
+        "id": "LIB-806",
+        "name": "LIB 806",
+        "capacity": 6,
+        "features": [
+          "Whiteboard",
+          "Power Outlets",
+          "Group Table"
+        ],
+        "status": "available",
+        "bookedSlots": []
+      },
+      {
+        "id": "LIB-807",
+        "name": "LIB 807",
+        "capacity": 4,
+        "features": [
+          "Whiteboard",
+          "Power Outlets"
+        ],
+        "status": "available",
+        "bookedSlots": []
+      },
+      {
+        "id": "LIB-808",
+        "name": "LIB 808",
+        "capacity": 6,
+        "features": [
+          "Whiteboard",
+          "Power Outlets",
+          "Group Table"
+        ],
+        "status": "available",
+        "bookedSlots": []
+      },
+      {
+        "id": "LIB-809",
+        "name": "LIB 809",
+        "capacity": 6,
+        "features": [
+          "Whiteboard",
+          "Power Outlets",
+          "Group Table"
+        ],
+        "status": "available",
+        "bookedSlots": []
+      }
+    ],
+    "9": [
+      {
+        "id": "LIB-905A",
+        "name": "LIB 905A",
+        "capacity": 6,
+        "features": [
+          "Whiteboard",
+          "Power Outlets",
+          "Group Table"
+        ],
+        "status": "available",
+        "bookedSlots": []
+      },
+      {
+        "id": "LIB-905B",
+        "name": "LIB 905B",
+        "capacity": 6,
+        "features": [
+          "Whiteboard",
+          "Power Outlets",
+          "Group Table"
+        ],
+        "status": "available",
+        "bookedSlots": []
+      },
+      {
+        "id": "LIB-905C",
+        "name": "LIB 905C",
+        "capacity": 4,
+        "features": [
+          "Whiteboard",
+          "Power Outlets"
+        ],
+        "status": "available",
+        "bookedSlots": []
+      },
+      {
+        "id": "LIB-908",
+        "name": "LIB 908",
+        "capacity": 6,
+        "features": [
+          "Whiteboard",
+          "Power Outlets",
+          "Group Table"
+        ],
+        "status": "available",
+        "bookedSlots": []
+      }
+    ]
+  },
+  "bookings": [],
+  "users": {}
+}
