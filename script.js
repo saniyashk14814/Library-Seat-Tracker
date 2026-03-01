@@ -230,7 +230,7 @@ function updateBookingCount() {
 }
 
 // DOM elements
-const grid = document.getElementById("seatGrid");
+const grid = document.getElementById("seatCategories");
 const label = document.getElementById("currentFloor");
 const floorTitle = document.getElementById("floorTitle");
 const floorDescription = document.getElementById("floorDescription");
@@ -826,32 +826,86 @@ async function cancelBooking(bookingId) {
   }
 }
 
-// Render seats
+// Seat zone/category icons and colors
+const zoneStyles = {
+  'Carrel': { icon: '📖', color: '#8b5cf6', label: 'Study Carrels', desc: 'Private enclosed desks with walls' },
+  'Window': { icon: '🪟', color: '#06b6d4', label: 'Window Seats', desc: 'Natural light seating' },
+  'Quiet': { icon: '🤫', color: '#22c55e', label: 'Quiet Zone', desc: 'Silent individual study' },
+  'Silent': { icon: '🔇', color: '#14b8a6', label: 'Silent Zone', desc: 'Absolute silence required' },
+  'Group': { icon: '👥', color: '#f59e0b', label: 'Group Seating', desc: 'Collaborative spaces' },
+  'Individual': { icon: '🧑', color: '#3b82f6', label: 'Individual Seats', desc: 'Single person desks' },
+  'Computer': { icon: '💻', color: '#a855f7', label: 'Computer Stations', desc: 'Desktop computers' },
+  'Desktop': { icon: '🖥️', color: '#6366f1', label: 'Desktop Workstations', desc: 'Computer workstations' },
+  'Lab': { icon: '🔬', color: '#ec4899', label: 'Lab Seating', desc: 'Computer lab spaces' },
+  'Open': { icon: '🪑', color: '#10b981', label: 'Open Seating', desc: 'Flexible open spaces' }
+};
+
+// Render seats grouped by category
 function renderSeats() {
   grid.innerHTML = "";
 
+  // Group seats by zone
+  const seatsByZone = {};
   floors[currentFloor].forEach(seat => {
-    const div = document.createElement("div");
-    div.className = `seat ${seat.status}`;
-    div.innerHTML = `<strong>S${seat.id}</strong><small>${seat.zone}</small>`;
+    if (!seatsByZone[seat.zone]) {
+      seatsByZone[seat.zone] = [];
+    }
+    seatsByZone[seat.zone].push(seat);
+  });
 
-    div.onclick = () => {
-      if (seat.status === "available") {
-        openSeatBookingModal(seat);
-      } else if (seat.status === "reserved") {
-        // Check if user owns this booking
-        const userOwns = userBookings.some(b =>
-          b.type === 'seat' &&
-          b.floor === currentFloor &&
-          b.name === `Seat S${seat.id}`
-        );
-        if (userOwns) {
-          showToast('error', 'Use "My Bookings" to cancel your reservation');
+  // Render each zone category
+  Object.keys(seatsByZone).forEach(zone => {
+    const seats = seatsByZone[zone];
+    const style = zoneStyles[zone] || { icon: '🪑', color: '#6b7280', label: zone, desc: '' };
+
+    // Create category container
+    const categoryDiv = document.createElement('div');
+    categoryDiv.className = 'seat-category';
+    categoryDiv.style.setProperty('--category-color', style.color);
+
+    // Category header
+    const headerDiv = document.createElement('div');
+    headerDiv.className = 'category-header';
+    headerDiv.innerHTML = `
+      <div class="category-title">
+        <span class="category-icon">${style.icon}</span>
+        <h4>${style.label}</h4>
+        <span class="category-count">${seats.filter(s => s.status === 'available').length}/${seats.length} available</span>
+      </div>
+      <p class="category-desc">${style.desc}</p>
+    `;
+    categoryDiv.appendChild(headerDiv);
+
+    // Seats grid
+    const seatsGrid = document.createElement('div');
+    seatsGrid.className = 'category-seats-grid';
+
+    seats.forEach(seat => {
+      const div = document.createElement("div");
+      div.className = `seat ${seat.status}`;
+      div.style.setProperty('--zone-color', style.color);
+      div.innerHTML = `<strong>S${seat.id}</strong><small>${seat.zone}</small>`;
+
+      div.onclick = () => {
+        if (seat.status === "available") {
+          openSeatBookingModal(seat);
+        } else if (seat.status === "reserved") {
+          const userOwns = userBookings.some(b =>
+            b.type === 'seat' &&
+            b.floor === currentFloor &&
+            b.name === `Seat S${seat.id}`
+          );
+          if (userOwns) {
+            showToast('error', 'Use "My Bookings" to cancel your reservation');
+          }
         }
-      }
-    };
+      };
 
-    grid.appendChild(div);
+      seatsGrid.appendChild(div);
+    });
+
+    categoryDiv.appendChild(seatsGrid);
+    grid.appendChild(categoryDiv);
   });
 }
 
