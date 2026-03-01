@@ -1,40 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Library Seat Tracker</title>
+  <title>TMU Library Seat Tracker</title>
   <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
-<header>
-  <h1>Library Seat Tracker – Reservation Prototype</h1>
-  <div id="currentFloor">Floor: 1</div>
-</header>
+  <header>
+    <h1>TMU Library Seat Tracker</h1>
+    <div id="currentFloor">Floor: 2</div>
+  </header>
 
-<div class="container">
-  <aside>
-    <div class="section">
-      <h3>Floors</h3>
-      <button class="btn active" data-floor="1">Floor 1</button>
-      <button class="btn" data-floor="2">Floor 2</button>
-      <button class="btn" data-floor="3">Floor 3</button>
+  <div class="container">
+    <aside>
+      <div class="section">
+        <h3>Floors</h3>
+        <button class="btn active" data-floor="2">Floor 2 - Main Floor</button>
+        <button class="btn" data-floor="3">Floor 3 - Computer Labs</button>
+        <button class="btn" data-floor="4">Floor 4 - Archives</button>
+        <button class="btn" data-floor="5">Floor 5 - Quiet Study</button>
+        <button class="btn" data-floor="6">Floor 6 - Quiet Study</button>
+        <button class="btn" data-floor="7">Floor 7 - Quiet Study</button>
+        <button class="btn" data-floor="8">Floor 8 - Group Study</button>
+        <button class="btn" data-floor="9">Floor 9 - Quiet Study</button>
+        <button class="btn" data-floor="10">Floor 10 - Silent Study</button>
+      </div>
+      <div class="section">
+        <h3>Legend</h3>
+        <div class="legend-sidebar">
+          <span><i class="dot available"></i>Available</span>
+          <span><i class="dot reserved"></i>Reserved</span>
+          <span><i class="dot occupied"></i>Occupied</span>
+        </div>
+      </div>
+    </aside>
+
+    <main>
+      <div id="floorInfo" class="floor-info">
+        <h2 id="floorTitle">Floor 2 - General Study Area</h2>
+        <p id="floorDescription">Open seating area with individual desks and group tables.</p>
+      </div>
+
+      <div id="floorMap" class="floor-map">
+        <!-- Floor map will be rendered here -->
+      </div>
+
+      <div id="studyRoomsSection" class="study-rooms-section" style="display:none;">
+        <h3>📚 Study Rooms</h3>
+        <p class="study-rooms-info">Click on an available room to book it. Each room can be booked for up to 2 hours.
+        </p>
+        <div id="studyRoomsGrid" class="study-rooms-grid"></div>
+      </div>
+
+      <h3 class="section-title">🪑 Individual Seats</h3>
+      <div id="seatGrid" class="grid"></div>
+    </main>
+  </div>
+
+  <div id="bookingModal" class="modal" style="display:none;">
+    <div class="modal-content">
+      <span class="close-modal">&times;</span>
+      <h2 id="modalTitle">Book Study Room</h2>
+      <div id="modalBody">
+        <p><strong>Room:</strong> <span id="roomName"></span></p>
+        <p><strong>Capacity:</strong> <span id="roomCapacity"></span> people</p>
+        <p><strong>Features:</strong> <span id="roomFeatures"></span></p>
+        <div class="time-slots">
+          <h4>Select Time Slot:</h4>
+          <div id="timeSlots" class="time-slots-grid"></div>
+        </div>
+        <button id="confirmBooking" class="btn-confirm">Confirm Booking</button>
+      </div>
     </div>
-  </aside>
+  </div>
 
-  <main>
-    <div class="legend">
-      <span><i class="dot available"></i>Available</span>
-      <span><i class="dot reserved"></i>Reserved</span>
-      <span><i class="dot occupied"></i>Occupied</span>
-    </div>
+  <footer>TMU Library • Click available seat/room to reserve • Reservations persist per floor</footer>
 
-    <div id="seatGrid" class="grid"></div>
-  </main>
-</div>
-
-<footer>Click available seat → Reserved. Reserved seats persist per floor.</footer>
-
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
+
 </html>
