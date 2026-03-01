@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Library Seat Tracker</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header>
+  <h1>Library Seat Tracker – Reservation Prototype</h1>
+  <div id="currentFloor">Floor: 1</div>
+</header>
+
+<div class="container">
+  <aside>
+    <div class="section">
+      <h3>Floors</h3>
+      <button class="btn active" data-floor="1">Floor 1</button>
+      <button class="btn" data-floor="2">Floor 2</button>
+      <button class="btn" data-floor="3">Floor 3</button>
+    </div>
+  </aside>
+
+  <main>
+    <div class="legend">
+      <span><i class="dot available"></i>Available</span>
+      <span><i class="dot reserved"></i>Reserved</span>
+      <span><i class="dot occupied"></i>Occupied</span>
+    </div>
+
+    <div id="seatGrid" class="grid"></div>
+  </main>
+</div>
+
+<footer>Click available seat → Reserved. Reserved seats persist per floor.</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
