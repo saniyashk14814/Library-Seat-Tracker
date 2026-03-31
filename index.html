@@ -7,56 +7,94 @@
   <title>TMU Library Seat Tracker</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <script src="validation.js" defer></script>
 </head>
 
 <body>
   <a href="#main" class="skip-link">Skip to main content</a>
+
   <header>
-    <div class="header-left">
-      <img src="https://www.torontomu.ca/content/dam/tmul/images/TMU_CMYK_Primary_Logo.svg" alt="TMU Logo"
-        class="tmu-logo" onerror="this.style.display='none'">
-      <h1>Library Seat Tracker</h1>
-    </div>
-    <div class="header-right">
-      <div id="userBookings" class="user-bookings" role="button" tabindex="0" aria-label="View my bookings">
-        <svg class="booking-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
-        <span id="bookingCount">0</span> Bookings
+    <div class="header-inner">
+      <div class="header-left">
+        <img src="https://www.torontomu.ca/content/dam/tmul/images/TMU_CMYK_Primary_Logo.svg" alt="TMU Logo"
+          class="tmu-logo" onerror="this.style.display='none'">
+        <div class="header-title-group">
+          <h1>Library Seat Tracker</h1>
+          <span class="header-subtitle" id="currentFloor">Floor 2 - Main Floor</span>
+        </div>
       </div>
-      <div id="currentFloor">Floor: 2</div>
+      <div class="header-right">
+        <div id="userBookings" class="user-bookings" role="button" tabindex="0" aria-label="View my bookings">
+          <svg class="booking-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
+          <span class="bookings-badge" id="bookingCount">0</span>
+          <span class="bookings-label">My Bookings</span>
+        </div>
+      </div>
     </div>
   </header>
 
   <div class="container">
     <aside>
-      <div class="section">
-        <h3>Floors</h3>
-        <button class="btn active" data-floor="2">Floor 2 - Main Floor</button>
-        <button class="btn" data-floor="3">Floor 3 - Computer Labs</button>
-        <button class="btn" data-floor="4">Floor 4 - Archives</button>
-        <button class="btn" data-floor="5">Floor 5 - Quiet Study</button>
-        <button class="btn" data-floor="6">Floor 6 - Quiet Study</button>
-        <button class="btn" data-floor="7">Floor 7 - Quiet Study</button>
-        <button class="btn" data-floor="8">Floor 8 - Group Study</button>
-        <button class="btn" data-floor="9">Floor 9 - Quiet Study</button>
-        <button class="btn" data-floor="10">Floor 10 - Silent Study</button>
-      </div>
-      <div class="section">
-        <h3>Legend</h3>
+      <nav aria-label="Floor navigation">
+        <h3 class="sidebar-heading">Floors</h3>
+        <div class="floor-buttons">
+          <button class="floor-btn active" data-floor="2">
+            <span class="floor-num">2</span>
+            <span class="floor-label">Main Floor</span>
+          </button>
+          <button class="floor-btn" data-floor="3">
+            <span class="floor-num">3</span>
+            <span class="floor-label">Computer Labs</span>
+          </button>
+          <button class="floor-btn" data-floor="4">
+            <span class="floor-num">4</span>
+            <span class="floor-label">Archives</span>
+          </button>
+          <button class="floor-btn" data-floor="5">
+            <span class="floor-num">5</span>
+            <span class="floor-label">Quiet Study</span>
+          </button>
+          <button class="floor-btn" data-floor="6">
+            <span class="floor-num">6</span>
+            <span class="floor-label">Quiet Study</span>
+          </button>
+          <button class="floor-btn" data-floor="7">
+            <span class="floor-num">7</span>
+            <span class="floor-label">Quiet Study</span>
+          </button>
+          <button class="floor-btn" data-floor="8">
+            <span class="floor-num">8</span>
+            <span class="floor-label">Group Study</span>
+          </button>
+          <button class="floor-btn" data-floor="9">
+            <span class="floor-num">9</span>
+            <span class="floor-label">Quiet Study</span>
+          </button>
+          <button class="floor-btn" data-floor="10">
+            <span class="floor-num">10</span>
+            <span class="floor-label">Silent Study</span>
+          </button>
+        </div>
+      </nav>
+      <div class="sidebar-section">
+        <h3 class="sidebar-heading">Legend</h3>
         <div class="legend-sidebar">
-          <span><i class="dot available"></i>Available</span>
-          <span><i class="dot reserved"></i>Reserved</span>
-          <span><i class="dot occupied"></i>Occupied</span>
+          <span class="legend-item"><i class="dot available"></i>Available</span>
+          <span class="legend-item"><i class="dot reserved"></i>Reserved</span>
+          <span class="legend-item"><i class="dot occupied"></i>Occupied</span>
         </div>
       </div>
     </aside>
 
     <main id="main">
       <div id="floorInfo" class="floor-info">
-        <h2 id="floorTitle">Floor 2 - General Study Area</h2>
-        <p id="floorDescription">Open seating area with individual desks and group tables.</p>
+        <div class="floor-info-content">
+          <h2 id="floorTitle">Floor 2 - General Study Area</h2>
+          <p id="floorDescription">Open seating area with individual desks and group tables.</p>
+        </div>
+        <div class="floor-stats" id="floorStats"></div>
       </div>
 
       <div id="floorMap" class="floor-map">
@@ -64,29 +102,44 @@
       </div>
 
       <div id="studyRoomsSection" class="study-rooms-section" style="display:none;">
-        <h3><svg class="section-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> Study Rooms</h3>
-        <p class="study-rooms-info">Click on an available room to book it. Each room can be booked for up to 2 hours.
-        </p>
+        <h3 class="content-section-title">
+          <svg class="section-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          Study Rooms
+        </h3>
+        <p class="study-rooms-info">Click on an available room to book it. Each room can be booked for up to 2 hours.</p>
         <div id="studyRoomsGrid" class="study-rooms-grid"></div>
       </div>
 
-      <h3 class="section-title"><svg class="section-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 9V6a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v3"/><path d="M3 16a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5a2 2 0 0 0-4 0v1H7v-1a2 2 0 0 0-4 0z"/><path d="M5 18v2"/><path d="M19 18v2"/></svg> Individual Seats</h3>
+      <h3 class="content-section-title">
+        <svg class="section-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 9V6a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v3"/><path d="M3 16a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5a2 2 0 0 0-4 0v1H7v-1a2 2 0 0 0-4 0z"/><path d="M5 18v2"/><path d="M19 18v2"/></svg>
+        Individual Seats
+      </h3>
       <div id="seatCategories" class="seat-categories">
         <!-- Categorized seats will be rendered here -->
       </div>
     </main>
   </div>
 
-  <div id="bookingModal" class="modal" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-    <div class="modal-content">
-      <button class="close-modal" aria-label="Close dialog">&times;</button>
-      <h2 id="modalTitle">Book Study Room</h2>
-      <div id="modalBody">
-        <p><strong>Room:</strong> <span id="roomName"></span></p>
-        <p><strong>Capacity:</strong> <span id="roomCapacity"></span> people</p>
-        <p><strong>Features:</strong> <span id="roomFeatures"></span></p>
+  <!-- Room Booking Modal -->
+  <div id="bookingModal" class="modal-overlay" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-panel">
+      <div class="modal-header">
+        <h2 id="modalTitle">Book Study Room</h2>
+        <button class="close-modal modal-close-btn" aria-label="Close dialog">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div id="modalBody" class="modal-body">
+        <div class="room-info-cards">
+          <div class="info-chip"><span class="info-chip-label">Room</span><span id="roomName" class="info-chip-value"></span></div>
+          <div class="info-chip"><span class="info-chip-label">Capacity</span><span id="roomCapacity" class="info-chip-value"></span></div>
+        </div>
+        <div class="room-features-row">
+          <span class="info-chip-label">Features</span>
+          <span id="roomFeatures" class="info-chip-value"></span>
+        </div>
         <div class="time-slots">
-          <h4>Select Time Slot:</h4>
+          <h4>Select Time Slot</h4>
           <div id="timeSlots" class="time-slots-grid"></div>
         </div>
         <button id="confirmBooking" class="btn-confirm">Confirm Booking</button>
@@ -94,14 +147,19 @@
     </div>
   </div>
 
-  <div id="seatModal" class="modal" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="seatModalTitle">
-    <div class="modal-content seat-modal-content">
-      <button class="close-seat-modal" aria-label="Close dialog">&times;</button>
-      <div class="seat-modal-header">
-        <div class="seat-icon-large"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 9V6a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v3"/><path d="M3 16a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5a2 2 0 0 0-4 0v1H7v-1a2 2 0 0 0-4 0z"/><path d="M5 18v2"/><path d="M19 18v2"/></svg></div>
+  <!-- Seat Booking Modal -->
+  <div id="seatModal" class="modal-overlay" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="seatModalTitle">
+    <div class="modal-panel seat-modal-panel">
+      <div class="modal-header">
+        <div class="modal-header-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 9V6a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v3"/><path d="M3 16a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5a2 2 0 0 0-4 0v1H7v-1a2 2 0 0 0-4 0z"/><path d="M5 18v2"/><path d="M19 18v2"/></svg>
+        </div>
         <h2 id="seatModalTitle">Reserve Seat</h2>
+        <button class="close-seat-modal modal-close-btn" aria-label="Close dialog">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
       </div>
-      <div class="seat-modal-body">
+      <div class="seat-modal-body modal-body">
         <div class="seat-info-grid">
           <div class="seat-info-item">
             <span class="info-label">Seat Number</span>
@@ -121,7 +179,7 @@
           </div>
         </div>
         <div class="duration-section">
-          <h4>Select Duration:</h4>
+          <h4>Select Duration</h4>
           <div class="duration-options">
             <button class="duration-btn" data-duration="1">1 Hour</button>
             <button class="duration-btn" data-duration="2">2 Hours</button>
@@ -130,7 +188,7 @@
           </div>
         </div>
         <div class="time-slots">
-          <h4>Select Start Time:</h4>
+          <h4>Select Start Time</h4>
           <div id="seatTimeSlots" class="time-slots-grid"></div>
         </div>
         <div class="booking-summary" id="seatBookingSummary" style="display:none;">
@@ -142,15 +200,29 @@
     </div>
   </div>
 
-  <div id="myBookingsModal" class="modal" style="display:none;" role="dialog" aria-modal="true" aria-label="My Bookings">
-    <div class="modal-content bookings-modal-content">
-      <button class="close-bookings-modal" aria-label="Close dialog">&times;</button>
-      <h2><svg class="section-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg> My Bookings</h2>
-      <div id="bookingsList" class="bookings-list"></div>
+  <!-- My Bookings Modal -->
+  <div id="myBookingsModal" class="modal-overlay" style="display:none;" role="dialog" aria-modal="true" aria-label="My Bookings">
+    <div class="modal-panel bookings-modal-panel">
+      <div class="modal-header">
+        <h2>
+          <svg class="section-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
+          My Bookings
+        </h2>
+        <button class="close-bookings-modal modal-close-btn" aria-label="Close dialog">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div id="bookingsList" class="bookings-list modal-body"></div>
     </div>
   </div>
 
-  <footer>TMU Library • Click available seat/room to reserve • Reservations persist per floor</footer>
+  <footer>
+    <div class="footer-inner">
+      <span>TMU Library</span>
+      <span class="footer-sep">&middot;</span>
+      <span>Click any available seat or room to reserve</span>
+    </div>
+  </footer>
 
   <script src="api.js"></script>
   <script src="script.js"></script>

@@ -246,6 +246,7 @@ const label = document.getElementById("currentFloor");
 const floorTitle = document.getElementById("floorTitle");
 const floorDescription = document.getElementById("floorDescription");
 const floorMap = document.getElementById("floorMap");
+const floorStatsEl = document.getElementById("floorStats");
 const studyRoomsSection = document.getElementById("studyRoomsSection");
 const studyRoomsGrid = document.getElementById("studyRoomsGrid");
 const modal = document.getElementById("bookingModal");
@@ -396,52 +397,52 @@ const legendDefinitions = [
   {
     label: 'Seating/Carrels',
     cellTypes: ['seats', 'carrels', 'group', 'study', 'reading'],
-    swatch: 'background:rgba(34,197,94,.3);border:1px solid var(--available);'
+    swatch: 'background:var(--available-bg);border:1px solid var(--available-border);'
   },
   {
     label: 'Study Rooms',
     cellTypes: ['rooms'],
-    swatch: 'background:rgba(59,130,246,.3);border:1px solid var(--accent);'
+    swatch: 'background:var(--primary-light);border:1px solid #BFDBFE;'
   },
   {
     label: 'Collaborative Spaces',
     cellTypes: ['collab'],
-    swatch: 'background:rgba(59,130,246,.3);border:1px solid var(--accent);'
+    swatch: 'background:var(--primary-light);border:1px solid #BFDBFE;'
   },
   {
     label: 'Computers',
     cellTypes: ['computers', 'lab', 'lab393', 'teaching'],
-    swatch: 'background:rgba(139,92,246,.3);border:1px solid #8b5cf6;'
+    swatch: 'background:#F5F3FF;border:1px solid #DDD6FE;'
   },
   {
     label: 'Service Desks',
     cellTypes: ['circ', 'help', 'printers', 'fcs', 'entrance', 'exit'],
-    swatch: 'background:rgba(251,191,36,.2);border:1px solid #fbbf24;'
+    swatch: 'background:#FFFBEB;border:1px solid #FDE68A;'
   },
   {
     label: 'Special Areas',
     cellTypes: ['gmdc', 'archives', 'special', 'immersion'],
-    swatch: 'background:rgba(236,72,153,.2);border:1px solid #ec4899;'
+    swatch: 'background:#FDF2F8;border:1px solid #FBCFE8;'
   },
   {
     label: 'Green Wall',
     cellTypes: ['green'],
-    swatch: 'background:rgba(34,197,94,.4);border:1px solid #22c55e;'
+    swatch: 'background:var(--available-bg);border:1px solid var(--available-border);'
   },
   {
     label: 'Book Stacks',
     cellTypes: ['stacks'],
-    swatch: 'background:rgba(107,114,128,.5);'
+    swatch: 'background:#F5F5F4;border:1px solid #D6D3D1;'
   },
   {
     label: 'Elevator/Stairs',
     cellTypes: ['elev', 'stairs'],
-    swatch: 'background:#374151;'
+    swatch: 'background:#F1F5F9;border:1px solid var(--border);'
   },
   {
     label: 'Washrooms',
     cellTypes: ['wc'],
-    swatch: 'background:#4b5563;'
+    swatch: 'background:#F1F5F9;border:1px solid var(--border);'
   }
 ];
 
@@ -586,7 +587,7 @@ function renderStudyRooms() {
         <span class="study-room-status">${room.status}</span>
       </div>
       <div class="study-room-details">
-        <div class="study-room-capacity">👥 ${room.capacity} people</div>
+        <div class="study-room-capacity">${svgIcon('<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>', 14)} ${room.capacity} people</div>
         <div class="study-room-features">${room.features.slice(0, 2).join(" • ")}</div>
       </div>
     `;
@@ -725,8 +726,8 @@ function showToast(type, message) {
   iconSpan.className = 'toast-icon';
   iconSpan.setAttribute('aria-hidden', 'true');
   iconSpan.innerHTML = type === 'success'
-    ? '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>'
-    : '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>';
+    ? '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#137333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>'
+    : '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#C5221F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>';
 
   const msgSpan = document.createElement('span');
   msgSpan.className = 'toast-message';
@@ -832,7 +833,7 @@ function updateSeatBookingSummary() {
     const endTime = calculateEndTime(selectedSeatTimeSlot, selectedDuration);
     summaryText.innerHTML = `
       <strong>Seat S${selectedSeat.id}</strong> on Floor ${currentFloor}<br>
-      📅 Today • ⏰ ${selectedSeatTimeSlot} - ${endTime} (${selectedDuration} ${selectedDuration === 1 ? 'hour' : 'hours'})
+      ${svgIcon('<rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>', 14)} Today &bull; ${svgIcon('<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>', 14)} ${selectedSeatTimeSlot} - ${endTime} (${selectedDuration} ${selectedDuration === 1 ? 'hour' : 'hours'})
     `;
     summaryEl.style.display = 'block';
     confirmSeatBooking.disabled = false;
@@ -968,7 +969,7 @@ function renderMyBookings() {
           <button class="confirm-arrival-btn" onclick="confirmArrival('${booking.id}')">Confirm Arrival</button>
         `;
       } else {
-        countdownHTML = `<div class="grace-period-expired"><span class="timer-icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span> Grace period expired — releasing soon</div>`;
+        countdownHTML = `<div class="grace-period-expired"><span class="timer-icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span> Grace period expired - releasing soon</div>`;
       }
     } else if (isConfirmed) {
       countdownHTML = `<div class="grace-period-confirmed"><span class="timer-icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></span> Confirmed</div>`;
@@ -1115,7 +1116,7 @@ async function handleGracePeriodExpiration() {
   updateBookingCount();
   render();
   renderMyBookings();
-  showToast('error', 'A reservation expired — seat released');
+  showToast('error', 'A reservation expired - seat released');
 }
 
 // Confirm arrival for a booking
@@ -1141,16 +1142,16 @@ const svgIcon = (path, size = 24) => `<svg width="${size}" height="${size}" view
 
 // Seat zone/category icons and colors
 const zoneStyles = {
-  'Carrel': { icon: svgIcon('<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>'), color: '#22c55e', label: 'Study Carrels', desc: 'Private enclosed desks with walls' },
-  'Window': { icon: svgIcon('<rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>'), color: '#22c55e', label: 'Window Seats', desc: 'Natural light seating' },
-  'Quiet': { icon: svgIcon('<path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/>'), color: '#22c55e', label: 'Quiet Zone', desc: 'Silent individual study' },
-  'Silent': { icon: svgIcon('<path d="M11 5L6 9H2v6h4l5 4V5z"/>'), color: '#22c55e', label: 'Silent Zone', desc: 'Absolute silence required' },
-  'Group': { icon: svgIcon('<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>'), color: '#3b82f6', label: 'Group Seating', desc: 'Collaborative spaces' },
-  'Individual': { icon: svgIcon('<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>'), color: '#22c55e', label: 'Individual Seats', desc: 'Single person desks' },
-  'Computer': { icon: svgIcon('<rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>'), color: '#8b5cf6', label: 'Computer Stations', desc: 'Desktop computers' },
-  'Desktop': { icon: svgIcon('<rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>'), color: '#8b5cf6', label: 'Desktop Workstations', desc: 'Computer workstations' },
-  'Lab': { icon: svgIcon('<rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>'), color: '#8b5cf6', label: 'Lab Seating', desc: 'Computer lab spaces' },
-  'Open': { icon: svgIcon('<path d="M19 9V6a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v3"/><path d="M3 16a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5a2 2 0 0 0-4 0v1H7v-1a2 2 0 0 0-4 0z"/><path d="M5 18v2"/><path d="M19 18v2"/>'), color: '#22c55e', label: 'Open Seating', desc: 'Flexible open spaces' }
+  'Carrel': { icon: svgIcon('<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>'), color: '#137333', label: 'Study Carrels', desc: 'Private enclosed desks with walls' },
+  'Window': { icon: svgIcon('<rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>'), color: '#137333', label: 'Window Seats', desc: 'Natural light seating' },
+  'Quiet': { icon: svgIcon('<path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/>'), color: '#137333', label: 'Quiet Zone', desc: 'Silent individual study' },
+  'Silent': { icon: svgIcon('<path d="M11 5L6 9H2v6h4l5 4V5z"/>'), color: '#137333', label: 'Silent Zone', desc: 'Absolute silence required' },
+  'Group': { icon: svgIcon('<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>'), color: '#004A9F', label: 'Group Seating', desc: 'Collaborative spaces' },
+  'Individual': { icon: svgIcon('<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>'), color: '#137333', label: 'Individual Seats', desc: 'Single person desks' },
+  'Computer': { icon: svgIcon('<rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>'), color: '#7627BB', label: 'Computer Stations', desc: 'Desktop computers' },
+  'Desktop': { icon: svgIcon('<rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>'), color: '#7627BB', label: 'Desktop Workstations', desc: 'Computer workstations' },
+  'Lab': { icon: svgIcon('<rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>'), color: '#7627BB', label: 'Lab Seating', desc: 'Computer lab spaces' },
+  'Open': { icon: svgIcon('<path d="M19 9V6a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v3"/><path d="M3 16a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5a2 2 0 0 0-4 0v1H7v-1a2 2 0 0 0-4 0z"/><path d="M5 18v2"/><path d="M19 18v2"/>'), color: '#137333', label: 'Open Seating', desc: 'Flexible open spaces' }
 };
 
 // Render seats grouped by category
@@ -1170,7 +1171,7 @@ function renderSeats() {
   // Render each zone category
   Object.keys(seatsByZone).forEach(zone => {
     const seats = seatsByZone[zone];
-    const style = zoneStyles[zone] || { icon: '🪑', color: '#6b7280', label: zone, desc: '' };
+    const style = zoneStyles[zone] || { icon: svgIcon('<path d="M19 9V6a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v3"/><path d="M3 16a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5a2 2 0 0 0-4 0v1H7v-1a2 2 0 0 0-4 0z"/><path d="M5 18v2"/><path d="M19 18v2"/>'), color: '#64748B', label: zone, desc: '' };
 
     // Create category container
     const categoryDiv = document.createElement('div');
@@ -1239,9 +1240,26 @@ function renderSeats() {
 function render() {
   const config = floorConfig[currentFloor];
 
-  label.textContent = `Floor: ${currentFloor}`;
+  label.textContent = `Floor ${currentFloor} - ${config.name}`;
   floorTitle.textContent = `Floor ${currentFloor} - ${config.name}`;
   floorDescription.textContent = config.description;
+
+  // Render floor stats
+  const floorSeats = floors[currentFloor] || [];
+  const availCount = floorSeats.filter(s => s.status === 'available').length;
+  const totalCount = floorSeats.length;
+  if (floorStatsEl) {
+    floorStatsEl.innerHTML = `
+      <div class="stat-card">
+        <span class="stat-number available">${availCount}</span>
+        <span class="stat-label">Available</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number total">${totalCount}</span>
+        <span class="stat-label">Total</span>
+      </div>
+    `;
+  }
 
   renderFloorMap();
   renderStudyRooms();
