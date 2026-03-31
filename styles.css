@@ -1,18 +1,51 @@
 :root {
   --bg: #0f172a;
-  --panel: #111827;
-  --text: #e5e7eb;
-  --muted: #9ca3af;
+  --panel: #1e293b;
+  --text: #f1f5f9;
+  --muted: #94a3b8;
   --available: #22c55e;
   --occupied: #ef4444;
   --reserved: #eab308;
-  --card: #1f2933;
-  --accent: #3b82f6;
+  --card: #1e293b;
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+  --border: #334155;
+  --ring: #3b82f6;
 }
 
 * {
   box-sizing: border-box;
-  font-family: system-ui, Arial;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* Skip-to-content link */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--accent);
+  color: #fff;
+  padding: 8px 16px;
+  z-index: 9999;
+  border-radius: 0 0 8px 0;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: top 0.2s;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 body {
@@ -23,7 +56,7 @@ body {
 
 header {
   padding: 12px 20px;
-  border-bottom: 1px solid #1f2937;
+  border-bottom: 1px solid var(--border);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -56,16 +89,25 @@ header {
   padding: 8px 14px;
   border-radius: 8px;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: background 0.2s;
   font-size: 13px;
+  border: none;
+  color: inherit;
 }
 
 .user-bookings:hover {
   background: rgba(255, 255, 255, 0.25);
 }
 
+.user-bookings:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
 .booking-icon {
-  font-size: 16px;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
 }
 
 #bookingCount {
@@ -97,7 +139,7 @@ h1 {
 }
 
 aside {
-  border-right: 1px solid #1f2937;
+  border-right: 1px solid var(--border);
   padding: 16px;
   background: var(--panel);
   overflow-y: auto;
@@ -120,24 +162,29 @@ aside {
   width: 100%;
   padding: 10px 12px;
   margin-bottom: 6px;
-  background: #0b1324;
-  border: 1px solid #243244;
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid var(--border);
   border-radius: 8px;
   color: var(--text);
   cursor: pointer;
   text-align: left;
   font-size: 13px;
-  transition: all 0.2s;
+  transition: background 0.2s, border-color 0.2s;
 }
 
 .btn:hover {
-  background: #1a2744;
-  border-color: #3b5998;
+  background: rgba(30, 41, 59, 0.8);
+  border-color: var(--ring);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
 }
 
 .btn.active {
   outline: 2px solid #60a5fa;
-  background: #1a2744;
+  background: rgba(30, 41, 59, 0.8);
 }
 
 .legend-sidebar {
@@ -164,7 +211,7 @@ main {
   padding: 16px;
   background: var(--panel);
   border-radius: 12px;
-  border: 1px solid #243244;
+  border: 1px solid var(--border);
 }
 
 .floor-info h2 {
@@ -182,7 +229,7 @@ main {
 .floor-map {
   background: var(--panel);
   border-radius: 12px;
-  border: 1px solid #243244;
+  border: 1px solid var(--border);
   padding: 20px;
   margin-bottom: 20px;
   min-height: 300px;
@@ -334,6 +381,9 @@ main {
 }
 
 .section-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   font-size: 14px;
   color: var(--muted);
   margin: 20px 0 12px 0;
@@ -341,10 +391,14 @@ main {
   letter-spacing: 0.5px;
 }
 
+.section-icon {
+  flex-shrink: 0;
+}
+
 .study-rooms-section {
   background: var(--panel);
   border-radius: 12px;
-  border: 1px solid #243244;
+  border: 1px solid var(--border);
   padding: 20px;
   margin-bottom: 20px;
 }
@@ -352,6 +406,9 @@ main {
 .study-rooms-section h3 {
   margin: 0 0 8px 0;
   font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .study-rooms-info {
@@ -369,14 +426,19 @@ main {
 .study-room {
   background: var(--card);
   border-radius: 12px;
-  border: 2px solid #243244;
+  border: 2px solid var(--border);
   padding: 16px;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: border-color 0.2s, transform 0.15s;
 }
 
 .study-room:hover {
   border-color: var(--accent);
+}
+
+.study-room:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
 }
 
 .study-room.available {
@@ -471,7 +533,7 @@ main {
 .seat-category {
   background: var(--panel);
   border-radius: 16px;
-  border: 1px solid #243244;
+  border: 1px solid var(--border);
   padding: 20px;
   border-left: 4px solid var(--category-color, var(--accent));
 }
@@ -536,16 +598,21 @@ main {
 .seat {
   background: var(--card);
   border-radius: 12px;
-  border: 1px solid #243244;
+  border: 1px solid var(--border);
   padding: 14px 8px;
   text-align: center;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
 }
 
 .seat:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.seat:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
 }
 
 .seat.available {
@@ -601,7 +668,7 @@ main {
 .modal-content {
   background: var(--panel);
   border-radius: 16px;
-  border: 1px solid #243244;
+  border: 1px solid var(--border);
   padding: 24px;
   max-width: 450px;
   width: 90%;
@@ -609,16 +676,33 @@ main {
   overflow-y: auto;
 }
 
-.close-modal {
+.close-modal,
+.close-seat-modal,
+.close-bookings-modal {
   float: right;
   font-size: 24px;
   cursor: pointer;
   color: var(--muted);
   line-height: 1;
+  background: none;
+  border: none;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: color 0.15s, background 0.15s;
 }
 
-.close-modal:hover {
+.close-modal:hover,
+.close-seat-modal:hover,
+.close-bookings-modal:hover {
   color: var(--text);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.close-modal:focus-visible,
+.close-seat-modal:focus-visible,
+.close-bookings-modal:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
 }
 
 .modal-content h2 {
@@ -655,16 +739,21 @@ main {
 .time-slot {
   padding: 10px;
   background: var(--card);
-  border: 1px solid #243244;
+  border: 1px solid var(--border);
   border-radius: 8px;
   text-align: center;
   cursor: pointer;
   font-size: 12px;
-  transition: all 0.2s;
+  transition: border-color 0.15s, background 0.15s;
 }
 
 .time-slot:hover {
   border-color: var(--accent);
+}
+
+.time-slot:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
 }
 
 .time-slot.selected {
@@ -690,11 +779,16 @@ main {
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: background 0.15s;
 }
 
 .btn-confirm:hover {
-  background: #2563eb;
+  background: var(--accent-hover);
+}
+
+.btn-confirm:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
 }
 
 .btn-confirm:disabled {
@@ -704,7 +798,7 @@ main {
 
 footer {
   padding: 12px 20px;
-  border-top: 1px solid #1f2937;
+  border-top: 1px solid var(--border);
   color: var(--muted);
   font-size: 12px;
   text-align: center;
@@ -741,7 +835,7 @@ footer {
   background: var(--card);
   padding: 12px;
   border-radius: 10px;
-  border: 1px solid #243244;
+  border: 1px solid var(--border);
 }
 
 .info-label {
@@ -777,16 +871,21 @@ footer {
 .duration-btn {
   padding: 10px 8px;
   background: var(--card);
-  border: 1px solid #243244;
+  border: 1px solid var(--border);
   border-radius: 8px;
   color: var(--text);
   font-size: 12px;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: border-color 0.15s, background 0.15s;
 }
 
 .duration-btn:hover {
   border-color: var(--accent);
+}
+
+.duration-btn:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
 }
 
 .duration-btn.selected {
@@ -832,7 +931,7 @@ footer {
   padding: 14px;
   background: var(--card);
   border-radius: 10px;
-  border: 1px solid #243244;
+  border: 1px solid var(--border);
   margin-bottom: 10px;
 }
 
@@ -866,12 +965,17 @@ footer {
   color: var(--occupied);
   font-size: 12px;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: background 0.15s, color 0.15s;
 }
 
 .cancel-booking:hover {
   background: var(--occupied);
   color: white;
+}
+
+.cancel-booking:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
 }
 
 .no-bookings {
@@ -883,20 +987,6 @@ footer {
 .no-bookings-icon {
   font-size: 48px;
   margin-bottom: 12px;
-}
-
-.close-seat-modal,
-.close-bookings-modal {
-  float: right;
-  font-size: 24px;
-  cursor: pointer;
-  color: var(--muted);
-  line-height: 1;
-}
-
-.close-seat-modal:hover,
-.close-bookings-modal:hover {
-  color: var(--text);
 }
 
 /* Grace Period Timer */
@@ -981,13 +1071,18 @@ footer {
   font-size: 12px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: background 0.15s, transform 0.1s;
   width: 100%;
 }
 
 .confirm-arrival-btn:hover {
   background: #16a34a;
   transform: translateY(-1px);
+}
+
+.confirm-arrival-btn:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
 }
 
 .booking-item.unconfirmed {
@@ -1000,7 +1095,7 @@ footer {
   bottom: 30px;
   right: 30px;
   background: var(--panel);
-  border: 1px solid #243244;
+  border: 1px solid var(--border);
   border-radius: 12px;
   padding: 16px 24px;
   display: flex;
@@ -1109,7 +1204,7 @@ footer {
 
   aside {
     border-right: none;
-    border-bottom: 1px solid #1f2937;
+    border-bottom: 1px solid var(--border);
     padding: 12px;
     max-height: 200px;
     overflow-y: auto;
