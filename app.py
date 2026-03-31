@@ -3,10 +3,11 @@ TMU Library Seat Tracker - Backend API
 Flask server with JSON file persistence
 """
 
+import os
+
 from flask import Flask, jsonify, request, send_from_directory
 from flask_cors import CORS
 import json
-import os
 from datetime import datetime, timedelta
 import uuid
 
@@ -494,7 +495,8 @@ if __name__ == '__main__':
     print("=" * 50)
     print("TMU Library Seat Tracker - Backend Server")
     print("=" * 50)
-    print("Starting server at http://localhost:5000")
+    port = int(os.environ.get("PORT", 5001))
+    print(f"Starting server at http://localhost:{port}")
     print("API endpoints:")
     print("  GET  /api/floors              - Get floor configs")
     print("  GET  /api/floors/<n>/seats    - Get seats for floor")
@@ -505,4 +507,4 @@ if __name__ == '__main__':
     print("  DELETE /api/bookings/<id>     - Cancel booking")
     print("  GET  /api/stats               - Get statistics")
     print("=" * 50)
-    app.run(debug=True, port=5001)
+    app.run(debug=True, port=port)

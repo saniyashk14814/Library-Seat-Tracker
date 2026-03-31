@@ -3,7 +3,7 @@
  * Handles all communication with the Python backend
  */
 
-const API_BASE = 'http://localhost:5001/api';
+const API_BASE = '/api';
 
 // Generate unique user ID for this browser session
 const USER_ID = localStorage.getItem('tmuUserId') || (() => {
