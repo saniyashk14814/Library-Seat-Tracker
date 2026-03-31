@@ -4,6 +4,7 @@ Flask server with JSON file persistence
 """
 
 import os
+import threading
 
 from flask import Flask, jsonify, request, send_from_directory
 from flask_cors import CORS
@@ -16,6 +17,10 @@ CORS(app)
 
 # Data file path
 DATA_FILE = 'data.json'
+
+# Grace period for unconfirmed reservations (in minutes)
+GRACE_PERIOD_MINUTES = int(os.environ.get('GRACE_PERIOD_MINUTES', 10))
+
 
 # Default data structure
 DEFAULT_DATA = {
@@ -161,6 +166,18 @@ def clean_expired_bookings():
     data = load_data()
     now = datetime.now()
 
+    # Collect booking IDs to remove (expired or grace period lapsed)
+    bookings_to_remove = set()
+    for b in data["bookings"]:
+        expired = datetime.fromisoformat(b["expires"]) <= now
+        grace_lapsed = (
+            not b.get("confirmed", True)
+            and b.get("gracePeriodExpires")
+            and datetime.fromisoformat(b["gracePeriodExpires"]) <= now
+        )
+        if expired or grace_lapsed:
+            bookings_to_remove.add(b["id"])
+
     # Clean seat bookings
     for floor_key, floor_data in data["floors"].items():
         for seat in floor_data["seats"]:
@@ -171,7 +188,29 @@ def clean_expired_bookings():
                     seat["bookedBy"] = None
                     seat["bookingExpires"] = None
 
-    # Clean room bookings
+    # Free seats/rooms for grace-period-lapsed bookings
+    for b in data["bookings"]:
+        if b["id"] in bookings_to_remove:
+            floor_key = str(b["floor"])
+            if b["type"] == "seat" and floor_key in data["floors"]:
+                for seat in data["floors"][floor_key]["seats"]:
+                    if seat["id"] == b.get("seatId"):
+                        seat["status"] = "available"
+                        seat["bookedBy"] = None
+                        seat["bookingExpires"] = None
+                        break
+            elif b["type"] == "room" and floor_key in data["study_rooms"]:
+                for room in data["study_rooms"][floor_key]:
+                    if room["id"] == b.get("roomId"):
+                        room["bookedSlots"] = [
+                            s for s in room["bookedSlots"]
+                            if s["time"] != b.get("timeSlot")
+                        ]
+                        if not room["bookedSlots"]:
+                            room["status"] = "available"
+                        break
+
+    # Clean room bookings (time-based expiry)
     for floor_key, rooms in data["study_rooms"].items():
         for room in rooms:
             room["bookedSlots"] = [
@@ -181,10 +220,10 @@ def clean_expired_bookings():
             if not room["bookedSlots"]:
                 room["status"] = "available"
 
-    # Remove expired bookings from bookings list
+    # Remove expired/lapsed bookings from bookings list
     data["bookings"] = [
         b for b in data["bookings"]
-        if datetime.fromisoformat(b["expires"]) > now
+        if b["id"] not in bookings_to_remove
     ]
 
     save_data(data)
@@ -270,7 +309,9 @@ def book_seat():
         return jsonify({"error": "Seat is not available"}), 409
 
     # Calculate expiration
-    expires = datetime.now() + timedelta(hours=duration)
+    now = datetime.now()
+    expires = now + timedelta(hours=duration)
+    grace_expires = now + timedelta(minutes=GRACE_PERIOD_MINUTES)
 
     # Book the seat
     seat["status"] = "reserved"
@@ -288,8 +329,10 @@ def book_seat():
         "userId": user_id,
         "timeSlot": time_slot,
         "duration": f"{duration} {'hour' if duration == 1 else 'hours'}",
-        "bookedAt": datetime.now().isoformat(),
-        "expires": expires.isoformat()
+        "bookedAt": now.isoformat(),
+        "expires": expires.isoformat(),
+        "confirmed": False,
+        "gracePeriodExpires": grace_expires.isoformat()
     }
     data["bookings"].append(booking)
 
@@ -335,7 +378,9 @@ def book_room():
         return jsonify({"error": "Time slot already booked"}), 409
 
     # Calculate expiration (assume 1 hour per slot, expires at end of day for simplicity)
-    expires = datetime.now().replace(hour=23, minute=59, second=59)
+    now = datetime.now()
+    expires = now.replace(hour=23, minute=59, second=59)
+    grace_expires = now + timedelta(minutes=GRACE_PERIOD_MINUTES)
 
     # Book the slot
     room["bookedSlots"].append({
@@ -357,8 +402,10 @@ def book_room():
         "userId": user_id,
         "timeSlot": time_slot,
         "duration": "1 hour",
-        "bookedAt": datetime.now().isoformat(),
-        "expires": expires.isoformat()
+        "bookedAt": now.isoformat(),
+        "expires": expires.isoformat(),
+        "confirmed": False,
+        "gracePeriodExpires": grace_expires.isoformat()
     }
     data["bookings"].append(booking)
 
@@ -479,6 +526,44 @@ def get_stats():
     })
 
 
+@app.route('/api/bookings/<booking_id>/confirm', methods=['POST'])
+def confirm_booking(booking_id):
+    """Confirm a reservation (user has arrived)"""
+    data = load_data()
+
+    booking = None
+    for b in data["bookings"]:
+        if b["id"] == booking_id:
+            booking = b
+            break
+
+    if not booking:
+        return jsonify({"error": "Booking not found"}), 404
+
+    if booking.get("confirmed"):
+        return jsonify({"error": "Booking already confirmed"}), 400
+
+    # Check if grace period already expired
+    if booking.get("gracePeriodExpires"):
+        if datetime.now() > datetime.fromisoformat(booking["gracePeriodExpires"]):
+            return jsonify({"error": "Grace period has expired"}), 410
+
+    booking["confirmed"] = True
+    save_data(data)
+
+    return jsonify({
+        "success": True,
+        "booking": booking,
+        "message": "Booking confirmed successfully"
+    })
+
+
+@app.route('/api/grace-period', methods=['GET'])
+def get_grace_period():
+    """Get the configured grace period in minutes"""
+    return jsonify({"gracePeriodMinutes": GRACE_PERIOD_MINUTES})
+
+
 @app.route('/api/reset', methods=['POST'])
 def reset_data():
     """Reset all data (for testing)"""
@@ -488,8 +573,19 @@ def reset_data():
     return jsonify({"success": True, "message": "Data reset successfully"})
 
 
+# Background thread to periodically clean expired/unconfirmed bookings
+def _run_expiration_checker():
+    """Runs every 30 seconds to release unconfirmed reservations past grace period"""
+    with app.app_context():
+        clean_expired_bookings()
+    timer = threading.Timer(30, _run_expiration_checker)
+    timer.daemon = True
+    timer.start()
+
+
 # Initialize data on startup
 initialize_data()
+_run_expiration_checker()
 
 if __name__ == '__main__':
     print("=" * 50)

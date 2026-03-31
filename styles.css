@@ -899,6 +899,101 @@ footer {
   color: var(--text);
 }
 
+/* Grace Period Timer */
+.grace-period-timer {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 6px 10px;
+  background: rgba(234, 179, 8, 0.12);
+  border: 1px solid rgba(234, 179, 8, 0.3);
+  border-radius: 8px;
+  font-size: 12px;
+  color: var(--reserved);
+}
+
+.grace-period-timer.timer-urgent {
+  background: rgba(239, 68, 68, 0.12);
+  border-color: rgba(239, 68, 68, 0.4);
+  color: var(--occupied);
+  animation: pulse-urgent 1s ease-in-out infinite;
+}
+
+@keyframes pulse-urgent {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.6;
+  }
+}
+
+.timer-icon {
+  font-size: 14px;
+}
+
+.timer-text {
+  font-size: 12px;
+}
+
+.timer-countdown {
+  font-variant-numeric: tabular-nums;
+  font-size: 13px;
+}
+
+.grace-period-expired {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 6px 10px;
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 8px;
+  font-size: 12px;
+  color: var(--occupied);
+}
+
+.grace-period-confirmed {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 6px 10px;
+  background: rgba(34, 197, 94, 0.12);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  border-radius: 8px;
+  font-size: 12px;
+  color: var(--available);
+}
+
+.confirm-arrival-btn {
+  margin-top: 8px;
+  padding: 8px 16px;
+  background: var(--available);
+  border: none;
+  border-radius: 8px;
+  color: #111827;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  width: 100%;
+}
+
+.confirm-arrival-btn:hover {
+  background: #16a34a;
+  transform: translateY(-1px);
+}
+
+.booking-item.unconfirmed {
+  border-color: rgba(234, 179, 8, 0.4);
+}
+
 /* Toast Notification */
 .toast {
   position: fixed;

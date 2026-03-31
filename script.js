@@ -151,6 +151,13 @@ async function initializeData() {
 
     if (backendAvailable) {
       console.log('Backend connected - using API');
+      // Load grace period config
+      try {
+        const gpConfig = await LibraryAPI.getGracePeriod();
+        gracePeriodMinutes = gpConfig.gracePeriodMinutes || 10;
+      } catch (e) {
+        console.warn('Could not load grace period config, using default');
+      }
       // Load data from API
       for (let i = 2; i <= 10; i++) {
         floors[i] = await LibraryAPI.getFloorSeats(i);
@@ -200,6 +207,10 @@ let selectedSeatTimeSlot = null;
 
 // User bookings storage
 let userBookings = [];
+
+// Grace period config (loaded from backend)
+let gracePeriodMinutes = 10;
+let countdownInterval = null;
 
 // Save bookings (API or localStorage fallback)
 async function saveBookings() {
@@ -670,7 +681,9 @@ confirmBooking.onclick = async () => {
             floor: currentFloor,
             time: selectedTimeSlot,
             duration: '1 hour',
-            bookedAt: new Date().toISOString()
+            bookedAt: new Date().toISOString(),
+            confirmed: false,
+            gracePeriodExpires: new Date(Date.now() + gracePeriodMinutes * 60000).toISOString()
           });
         }
       }
@@ -859,7 +872,9 @@ confirmSeatBooking.onclick = async () => {
             time: selectedSeatTimeSlot,
             duration: `${selectedDuration} ${selectedDuration === 1 ? 'hour' : 'hours'}`,
             endTime: calculateEndTime(selectedSeatTimeSlot, selectedDuration),
-            bookedAt: new Date().toISOString()
+            bookedAt: new Date().toISOString(),
+            confirmed: false,
+            gracePeriodExpires: new Date(Date.now() + gracePeriodMinutes * 60000).toISOString()
           });
         }
       }
@@ -900,23 +915,51 @@ function renderMyBookings() {
     return;
   }
 
-  list.innerHTML = userBookings.map(booking => `
-    <div class="booking-item">
-      <div class="booking-item-info">
-        <div class="booking-item-type">${booking.type === 'seat' ? '🪑 Seat' : '📚 Study Room'}</div>
-        <div class="booking-item-name">${booking.name}</div>
-        <div class="booking-item-details">
-          Floor ${booking.floor} • ${booking.time} - ${booking.endTime || ''} (${booking.duration})
+  list.innerHTML = userBookings.map(booking => {
+    const isConfirmed = booking.confirmed;
+    const graceExpires = booking.gracePeriodExpires;
+    let countdownHTML = '';
+
+    if (!isConfirmed && graceExpires) {
+      const remaining = new Date(graceExpires) - Date.now();
+      if (remaining > 0) {
+        const mins = Math.floor(remaining / 60000);
+        const secs = Math.floor((remaining % 60000) / 1000);
+        countdownHTML = `
+          <div class="grace-period-timer" data-grace-expires="${graceExpires}" data-booking-id="${booking.id}">
+            <span class="timer-icon">⏳</span>
+            <span class="timer-text">Confirm within <strong class="timer-countdown">${mins}:${String(secs).padStart(2, '0')}</strong></span>
+          </div>
+          <button class="confirm-arrival-btn" onclick="confirmArrival('${booking.id}')">✓ Confirm Arrival</button>
+        `;
+      } else {
+        countdownHTML = `<div class="grace-period-expired"><span class="timer-icon">⚠️</span> Grace period expired — releasing soon</div>`;
+      }
+    } else if (isConfirmed) {
+      countdownHTML = `<div class="grace-period-confirmed"><span class="timer-icon">✅</span> Confirmed</div>`;
+    }
+
+    return `
+      <div class="booking-item ${!isConfirmed && graceExpires ? 'unconfirmed' : ''}">
+        <div class="booking-item-info">
+          <div class="booking-item-type">${booking.type === 'seat' ? '🪑 Seat' : '📚 Study Room'}</div>
+          <div class="booking-item-name">${booking.name}</div>
+          <div class="booking-item-details">
+            Floor ${booking.floor} • ${booking.timeSlot || booking.time || ''} ${booking.endTime ? '- ' + booking.endTime : ''} (${booking.duration})
+          </div>
+          ${countdownHTML}
         </div>
+        <button class="cancel-booking" onclick="cancelBooking('${booking.id}')">Cancel</button>
       </div>
-      <button class="cancel-booking" onclick="cancelBooking(${booking.id})">Cancel</button>
-    </div>
-  `).join('');
+    `;
+  }).join('');
+
+  startCountdownUpdater();
 }
 
 // Cancel booking
 async function cancelBooking(bookingId) {
-  const booking = userBookings.find(b => b.id === bookingId);
+  const booking = userBookings.find(b => b.id == bookingId || b.id === bookingId);
   if (booking) {
     try {
       if (backendAvailable) {
@@ -950,6 +993,107 @@ async function cancelBooking(bookingId) {
     } catch (error) {
       showToast('error', error.message || 'Failed to cancel booking');
     }
+  }
+}
+
+// Start countdown updater for grace period timers
+function startCountdownUpdater() {
+  if (countdownInterval) clearInterval(countdownInterval);
+  countdownInterval = setInterval(() => {
+    const timers = document.querySelectorAll('.grace-period-timer');
+    if (timers.length === 0) {
+      clearInterval(countdownInterval);
+      countdownInterval = null;
+      return;
+    }
+
+    let needsRefresh = false;
+    timers.forEach(timer => {
+      const graceExpires = new Date(timer.dataset.graceExpires);
+      const remaining = graceExpires - Date.now();
+
+      if (remaining <= 0) {
+        needsRefresh = true;
+        return;
+      }
+
+      const mins = Math.floor(remaining / 60000);
+      const secs = Math.floor((remaining % 60000) / 1000);
+      const countdownEl = timer.querySelector('.timer-countdown');
+      if (countdownEl) {
+        countdownEl.textContent = `${mins}:${String(secs).padStart(2, '0')}`;
+      }
+
+      // Flash red when under 2 minutes
+      if (remaining < 120000) {
+        timer.classList.add('timer-urgent');
+      }
+    });
+
+    if (needsRefresh) {
+      handleGracePeriodExpiration();
+    }
+  }, 1000);
+}
+
+// Handle grace period expiration
+async function handleGracePeriodExpiration() {
+  if (countdownInterval) clearInterval(countdownInterval);
+  countdownInterval = null;
+
+  if (backendAvailable) {
+    try {
+      userBookings = await LibraryAPI.getUserBookings();
+      // Refresh seat data for current floor
+      floors[currentFloor] = await LibraryAPI.getFloorSeats(currentFloor);
+      if (floorConfig[currentFloor].hasStudyRooms) {
+        studyRooms[currentFloor] = await LibraryAPI.getFloorRooms(currentFloor);
+      }
+    } catch (e) {
+      console.error('Error refreshing after expiration:', e);
+    }
+  } else {
+    // Local fallback: remove unconfirmed expired bookings
+    const now = Date.now();
+    const expired = userBookings.filter(b =>
+      !b.confirmed && b.gracePeriodExpires && new Date(b.gracePeriodExpires) <= now
+    );
+    expired.forEach(b => {
+      if (b.type === 'seat') {
+        const seat = floors[b.floor]?.find(s => s.id === parseInt(String(b.name).replace('Seat S', '')));
+        if (seat) seat.status = 'available';
+      } else {
+        const room = studyRooms[b.floor]?.find(r => r.name === b.name);
+        if (room) room.status = 'available';
+      }
+    });
+    userBookings = userBookings.filter(b =>
+      b.confirmed || !b.gracePeriodExpires || new Date(b.gracePeriodExpires) > now
+    );
+  }
+
+  await saveBookings();
+  updateBookingCount();
+  render();
+  renderMyBookings();
+  showToast('error', 'A reservation expired — seat released');
+}
+
+// Confirm arrival for a booking
+async function confirmArrival(bookingId) {
+  try {
+    if (backendAvailable) {
+      await LibraryAPI.confirmBooking(bookingId);
+      userBookings = await LibraryAPI.getUserBookings();
+    } else {
+      const booking = userBookings.find(b => b.id == bookingId || b.id === bookingId);
+      if (booking) booking.confirmed = true;
+    }
+    await saveBookings();
+    renderMyBookings();
+    showToast('success', 'Arrival confirmed!');
+  } catch (error) {
+    showToast('error', error.message || 'Failed to confirm booking');
   }
 }
 

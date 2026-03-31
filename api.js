@@ -114,6 +114,22 @@ async function cancelBooking(bookingId) {
 }
 
 /**
+ * Confirm a booking (user has arrived)
+ */
+async function confirmBooking(bookingId) {
+    return apiRequest(`/bookings/${bookingId}/confirm`, {
+        method: 'POST'
+    });
+}
+
+/**
+ * Get the configured grace period in minutes
+ */
+async function getGracePeriod() {
+    return apiRequest('/grace-period');
+}
+
+/**
  * Get library statistics
  */
 async function getStats() {
@@ -150,6 +166,8 @@ window.LibraryAPI = {
     getUserBookings,
     getAllBookings,
     cancelBooking,
+    confirmBooking,
+    getGracePeriod,
     getStats,
     resetData,
     checkBackendHealth
