@@ -952,9 +952,9 @@
         {
           "id": 1,
           "zone": "Carrel",
-          "status": "available",
-          "bookedBy": null,
-          "bookingExpires": null
+          "status": "reserved",
+          "bookedBy": "user_fhtdawqlg",
+          "bookingExpires": "2026-03-31T16:44:49.831019"
         },
         {
           "id": 2,
@@ -2184,6 +2184,21 @@
       "expires": "2026-03-31T16:41:02.509468",
       "confirmed": false,
       "gracePeriodExpires": "2026-03-31T15:51:02.509468"
+    },
+    {
+      "id": "2ba58402-3bca-4646-85b9-fb53ba76e03f",
+      "type": "seat",
+      "name": "Seat S1",
+      "floor": 6,
+      "seatId": 1,
+      "zone": "Carrel",
+      "userId": "user_fhtdawqlg",
+      "timeSlot": "8:00 AM",
+      "duration": "1 hour",
+      "bookedAt": "2026-03-31T15:44:49.831019",
+      "expires": "2026-03-31T16:44:49.831019",
+      "confirmed": false,
+      "gracePeriodExpires": "2026-03-31T15:54:49.831019"
     }
   ],
   "users": {}

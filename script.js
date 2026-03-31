@@ -659,6 +659,17 @@ window.onclick = (e) => {
 // Confirm room booking
 confirmBooking.onclick = async () => {
   if (selectedRoom && selectedTimeSlot) {
+    // Validation checks
+    const requiredRoomError = validateRequired(selectedTimeSlot, 'Time slot');
+    if (requiredRoomError) { showToast('error', requiredRoomError); return; }
+
+    const timeSlotError = validateTimeSlot(selectedTimeSlot);
+    if (timeSlotError) { showToast('error', timeSlotError); return; }
+
+    const roomBooking = { type: 'room', floor: currentFloor, name: selectedRoom.name, time: selectedTimeSlot, duration: '1 hour' };
+    const doubleBookError = validateNoDoubleBooking(roomBooking, userBookings);
+    if (doubleBookError) { showToast('error', doubleBookError); return; }
+
     try {
       if (backendAvailable) {
         // Use API
@@ -849,6 +860,18 @@ closeSeatModal.onclick = closeSeatBookingModal;
 // Confirm seat booking
 confirmSeatBooking.onclick = async () => {
   if (selectedSeat && selectedDuration && selectedSeatTimeSlot) {
+    // Validation checks
+    const requiredSeatError = validateRequired(selectedSeatTimeSlot, 'Time slot');
+    if (requiredSeatError) { showToast('error', requiredSeatError); return; }
+
+    const seatTimeError = validateTimeSlot(selectedSeatTimeSlot);
+    if (seatTimeError) { showToast('error', seatTimeError); return; }
+
+    const durationStr = `${selectedDuration} ${selectedDuration === 1 ? 'hour' : 'hours'}`;
+    const seatBooking = { type: 'seat', floor: currentFloor, name: `Seat S${selectedSeat.id}`, time: selectedSeatTimeSlot, duration: durationStr };
+    const seatDoubleBookError = validateNoDoubleBooking(seatBooking, userBookings);
+    if (seatDoubleBookError) { showToast('error', seatDoubleBookError); return; }
+
     try {
       if (backendAvailable) {
         // Use API
