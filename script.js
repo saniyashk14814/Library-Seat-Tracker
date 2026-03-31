@@ -277,8 +277,8 @@ const floorMaps = {
       ['empty', 'empty', 'empty', 'empty', 'empty', 'empty', 'elev', 'stairs', 'empty', 'special', 'special', 'special'],
       ['archives', 'archives', 'archives', 'empty', 'empty', 'empty', 'elev', 'stairs', 'empty', 'seats', 'seats', 'seats'],
       ['archives', 'archives', 'archives', 'reading', 'reading', 'reading', 'empty', 'empty', 'seats', 'seats', 'seats', 'seats'],
-      ['empty', 'empty', 'empty', 'reading', 'reading', 'reading', 'empty', 'empty', 'group', 'group', 'group', 'group'],
-      ['empty', 'empty', 'empty', 'empty', 'empty', 'empty', 'empty', 'empty', 'group', 'group', 'group', 'empty']
+      ['empty', 'empty', 'empty', 'reading', 'reading', 'reading', 'empty', 'empty', 'seats', 'seats', 'seats', 'seats'],
+      ['empty', 'empty', 'empty', 'empty', 'empty', 'empty', 'empty', 'empty', 'seats', 'empty', 'empty', 'empty']
     ],
     labels: { archives: 'Archives', reading: 'Reading', special: 'Special Collections' }
   },
@@ -298,7 +298,7 @@ const floorMaps = {
       ['study', 'study', 'study', 'wc', 'wc', 'elev', 'stairs', 'seats', 'seats', 'rooms', 'rooms', 'rooms'],
       ['study', 'study', 'study', 'empty', 'empty', 'elev', 'stairs', 'seats', 'seats', 'rooms', 'rooms', 'rooms'],
       ['empty', 'empty', 'empty', 'empty', 'empty', 'elev', 'stairs', 'stacks', 'stacks', 'stacks', 'stacks', 'stacks'],
-      ['seats', 'seats', 'seats', 'seats', 'stacks', 'stacks', 'stacks', 'stacks', 'stacks', 'stacks', 'stacks', 'stacks'],
+      ['empty', 'empty', 'empty', 'empty', 'stacks', 'stacks', 'stacks', 'stacks', 'stacks', 'stacks', 'stacks', 'stacks'],
       ['carrels', 'carrels', 'carrels', 'carrels', 'stacks', 'stacks', 'stacks', 'stacks', 'stacks', 'stacks', 'stacks', 'stacks'],
       ['carrels', 'carrels', 'teaching', 'teaching', 'empty', 'empty', 'empty', 'empty', 'empty', 'empty', 'empty', 'empty']
     ],
@@ -329,11 +329,11 @@ const floorMaps = {
   9: { // Quiet Study - Books PS8000-T
     layout: [
       ['seats', 'seats', 'seats', 'wc', 'wc', 'elev', 'stairs', 'seats', 'seats', 'empty', 'rooms', 'rooms'],
-      ['seats', 'seats', 'seats', 'empty', 'empty', 'elev', 'stairs', 'seats', 'seats', 'empty', 'rooms', 'rooms'],
+      ['seats', 'seats', 'seats', 'empty', 'empty', 'elev', 'stairs', 'empty', 'empty', 'empty', 'rooms', 'rooms'],
       ['empty', 'empty', 'empty', 'empty', 'empty', 'elev', 'stairs', 'stacks', 'stacks', 'stacks', 'stacks', 'stacks'],
       ['carrels', 'carrels', 'carrels', 'stacks', 'stacks', 'stacks', 'stacks', 'stacks', 'stacks', 'stacks', 'stacks', 'stacks'],
       ['carrels', 'carrels', 'carrels', 'stacks', 'stacks', 'stacks', 'stacks', 'stacks', 'stacks', 'stacks', 'stacks', 'stacks'],
-      ['study', 'study', 'study', 'study', 'empty', 'empty', 'empty', 'empty', 'rooms', 'rooms', 'rooms', 'rooms']
+      ['empty', 'empty', 'empty', 'empty', 'empty', 'empty', 'empty', 'empty', 'rooms', 'rooms', 'rooms', 'rooms']
     ],
     labels: {}
   },
@@ -355,10 +355,10 @@ const cellStyles = {
   empty: { class: '', label: '' },
   wc: { class: 'restroom', label: '🚻' },
   elev: { class: 'stairs', label: '🛗' },
-  stairs: { class: 'stairs', label: '🚶' },
+  stairs: { class: 'stairs', label: '🪜' },
   seats: { class: 'seats', label: '' },
   carrels: { class: 'seats carrel', label: '📖' },
-  stacks: { class: 'stacks', label: '' },
+  stacks: { class: 'stacks', label: '📚' },
   rooms: { class: 'rooms', label: '📚' },
   group: { class: 'seats group', label: '👥' },
   computers: { class: 'computers', label: '💻' },
@@ -381,11 +381,135 @@ const cellStyles = {
   green: { class: 'green-wall', label: '' }
 };
 
+const legendDefinitions = [
+  {
+    label: 'Seating/Carrels',
+    cellTypes: ['seats', 'carrels', 'group', 'study', 'reading'],
+    swatch: 'background:rgba(34,197,94,.3);border:1px solid var(--available);'
+  },
+  {
+    label: 'Study Rooms',
+    cellTypes: ['rooms'],
+    swatch: 'background:rgba(59,130,246,.3);border:1px solid var(--accent);'
+  },
+  {
+    label: 'Collaborative Spaces',
+    cellTypes: ['collab'],
+    swatch: 'background:rgba(59,130,246,.3);border:1px solid var(--accent);'
+  },
+  {
+    label: 'Computers',
+    cellTypes: ['computers', 'lab', 'lab393', 'teaching'],
+    swatch: 'background:rgba(139,92,246,.3);border:1px solid #8b5cf6;'
+  },
+  {
+    label: 'Service Desks',
+    cellTypes: ['circ', 'help', 'printers', 'fcs', 'entrance', 'exit'],
+    swatch: 'background:rgba(251,191,36,.2);border:1px solid #fbbf24;'
+  },
+  {
+    label: 'Special Areas',
+    cellTypes: ['gmdc', 'archives', 'special', 'immersion'],
+    swatch: 'background:rgba(236,72,153,.2);border:1px solid #ec4899;'
+  },
+  {
+    label: 'Green Wall',
+    cellTypes: ['green'],
+    swatch: 'background:rgba(34,197,94,.4);border:1px solid #22c55e;'
+  },
+  {
+    label: 'Book Stacks',
+    cellTypes: ['stacks'],
+    swatch: 'background:rgba(107,114,128,.5);'
+  },
+  {
+    label: 'Elevator/Stairs',
+    cellTypes: ['elev', 'stairs'],
+    swatch: 'background:#374151;'
+  },
+  {
+    label: 'Washrooms',
+    cellTypes: ['wc'],
+    swatch: 'background:#4b5563;'
+  }
+];
+
+const seatMapGroups = [
+  {
+    cellTypes: ['group'],
+    zones: ['Group']
+  },
+  {
+    cellTypes: ['carrels'],
+    zones: ['Carrel']
+  },
+  {
+    cellTypes: ['seats', 'study', 'reading'],
+    zones: ['Individual', 'Quiet', 'Silent', 'Window', 'Open']
+  },
+  {
+    cellTypes: ['computers', 'lab', 'lab393', 'teaching'],
+    zones: ['Desktop', 'Computer', 'Lab']
+  }
+];
+
+function buildSeatMapAssignments(floorNum) {
+  const mapData = floorMaps[floorNum];
+  const floorSeats = floors[floorNum] || [];
+  const assignments = {};
+
+  seatMapGroups.forEach(group => {
+    const matchingCells = [];
+    const matchingSeats = floorSeats.filter(seat => group.zones.includes(seat.zone));
+
+    mapData.layout.forEach((row, rowIndex) => {
+      row.forEach((cellType, colIndex) => {
+        if (group.cellTypes.includes(cellType)) {
+          matchingCells.push(`${rowIndex}-${colIndex}`);
+        }
+      });
+    });
+
+    if (!matchingCells.length || !matchingSeats.length) {
+      return;
+    }
+
+    matchingCells.forEach((cellKey, index) => {
+      const seat = matchingSeats[index];
+      if (seat) {
+        assignments[cellKey] = seat;
+      }
+    });
+  });
+
+  return assignments;
+}
+
+function getDisplayedSeatsForFloor(floorNum) {
+  const assignments = buildSeatMapAssignments(floorNum);
+  return Object.values(assignments)
+    .filter(Boolean)
+    .sort((a, b) => a.id - b.id);
+}
+
+function highlightMapSeat(seatId) {
+  document.querySelectorAll('.map-cell').forEach(cell => {
+    const seatIds = cell.dataset.seatIds ? cell.dataset.seatIds.split(',') : [];
+    cell.classList.toggle('map-seat-highlight', seatIds.includes(String(seatId)));
+  });
+}
+
+function clearMapSeatHighlights() {
+  document.querySelectorAll('.map-cell.map-seat-highlight').forEach(cell => {
+    cell.classList.remove('map-seat-highlight');
+  });
+}
+
 // Render floor map
 function renderFloorMap() {
   const config = floorConfig[currentFloor];
-  const hasRooms = config.hasStudyRooms;
   const mapData = floorMaps[currentFloor];
+  const seatAssignments = buildSeatMapAssignments(currentFloor);
 
   let mapHTML = '<div class="floor-map-grid">';
 
@@ -394,32 +518,35 @@ function renderFloorMap() {
     for (let col = 0; col < mapData.layout[row].length; col++) {
       const cellType = mapData.layout[row][col];
       const style = cellStyles[cellType] || { class: '', label: '' };
-      let labelText = style.label;
+      let cellContent = style.label;
+      let extraClass = '';
+      let dataAttrs = '';
+      const cellKey = `${row}-${col}`;
+      const assignedSeat = seatAssignments[cellKey];
 
       // Check for custom labels
       if (mapData.labels[cellType]) {
-        labelText = mapData.labels[cellType];
+        cellContent = mapData.labels[cellType];
       }
 
-      mapHTML += `<div class="map-cell ${style.class}">${labelText}</div>`;
+      if (assignedSeat) {
+        extraClass = ' seat-location';
+        dataAttrs = ` data-seat-ids="${assignedSeat.id}"`;
+        cellContent = `
+          <span class="map-seat-id ${assignedSeat.status}">S${assignedSeat.id}</span>
+        `;
+      }
+
+      mapHTML += `<div class="map-cell ${style.class}${extraClass}"${dataAttrs}>${cellContent}</div>`;
     }
   }
 
   mapHTML += '</div>';
 
-  // Dynamic legend based on what's on this floor
-  let legendItems = [];
-  legendItems.push('<span><div class="map-legend-dot" style="background:rgba(34,197,94,.3);border:1px solid var(--available);"></div>Seating/Carrels</span>');
-  if (hasRooms) {
-    legendItems.push('<span><div class="map-legend-dot" style="background:rgba(59,130,246,.3);border:1px solid var(--accent);"></div>Study Rooms</span>');
-  }
-  legendItems.push('<span><div class="map-legend-dot" style="background:rgba(139,92,246,.3);border:1px solid #8b5cf6;"></div>Computers</span>');
-  legendItems.push('<span><div class="map-legend-dot" style="background:rgba(107,114,128,.5);"></div>Book Stacks</span>');
-  legendItems.push('<span><div class="map-legend-dot" style="background:#374151;"></div>Elevator/Stairs</span>');
-  legendItems.push('<span><div class="map-legend-dot" style="background:#4b5563;"></div>Washrooms</span>');
-  if (currentFloor === 8) {
-    legendItems.push('<span><div class="map-legend-dot" style="background:rgba(34,197,94,.5);border:1px solid #22c55e;"></div>Green Wall</span>');
-  }
+  const usedCellTypes = new Set(mapData.layout.flat().filter(cell => cell !== 'empty'));
+  const legendItems = legendDefinitions
+    .filter(item => item.cellTypes.some(cellType => usedCellTypes.has(cellType)))
+    .map(item => `<span><div class="map-legend-dot" style="${item.swatch}"></div>${item.label}</span>`);
 
   mapHTML += `<div class="map-legend">${legendItems.join('')}</div>`;
 
@@ -828,25 +955,26 @@ async function cancelBooking(bookingId) {
 
 // Seat zone/category icons and colors
 const zoneStyles = {
-  'Carrel': { icon: '📖', color: '#8b5cf6', label: 'Study Carrels', desc: 'Private enclosed desks with walls' },
-  'Window': { icon: '🪟', color: '#06b6d4', label: 'Window Seats', desc: 'Natural light seating' },
+  'Carrel': { icon: '📖', color: '#22c55e', label: 'Study Carrels', desc: 'Private enclosed desks with walls' },
+  'Window': { icon: '🪟', color: '#22c55e', label: 'Window Seats', desc: 'Natural light seating' },
   'Quiet': { icon: '🤫', color: '#22c55e', label: 'Quiet Zone', desc: 'Silent individual study' },
-  'Silent': { icon: '🔇', color: '#14b8a6', label: 'Silent Zone', desc: 'Absolute silence required' },
-  'Group': { icon: '👥', color: '#f59e0b', label: 'Group Seating', desc: 'Collaborative spaces' },
-  'Individual': { icon: '🧑', color: '#3b82f6', label: 'Individual Seats', desc: 'Single person desks' },
-  'Computer': { icon: '💻', color: '#a855f7', label: 'Computer Stations', desc: 'Desktop computers' },
-  'Desktop': { icon: '🖥️', color: '#6366f1', label: 'Desktop Workstations', desc: 'Computer workstations' },
-  'Lab': { icon: '🔬', color: '#ec4899', label: 'Lab Seating', desc: 'Computer lab spaces' },
-  'Open': { icon: '🪑', color: '#10b981', label: 'Open Seating', desc: 'Flexible open spaces' }
+  'Silent': { icon: '🔇', color: '#22c55e', label: 'Silent Zone', desc: 'Absolute silence required' },
+  'Group': { icon: '👥', color: '#3b82f6', label: 'Group Seating', desc: 'Collaborative spaces' },
+  'Individual': { icon: '🧑', color: '#22c55e', label: 'Individual Seats', desc: 'Single person desks' },
+  'Computer': { icon: '💻', color: '#8b5cf6', label: 'Computer Stations', desc: 'Desktop computers' },
+  'Desktop': { icon: '🖥️', color: '#8b5cf6', label: 'Desktop Workstations', desc: 'Computer workstations' },
+  'Lab': { icon: '🔬', color: '#8b5cf6', label: 'Lab Seating', desc: 'Computer lab spaces' },
+  'Open': { icon: '🪑', color: '#22c55e', label: 'Open Seating', desc: 'Flexible open spaces' }
 };
 
 // Render seats grouped by category
 function renderSeats() {
   grid.innerHTML = "";
+  const displayedSeats = getDisplayedSeatsForFloor(currentFloor);
 
   // Group seats by zone
   const seatsByZone = {};
-  floors[currentFloor].forEach(seat => {
+  displayedSeats.forEach(seat => {
     if (!seatsByZone[seat.zone]) {
       seatsByZone[seat.zone] = [];
     }
@@ -884,7 +1012,11 @@ function renderSeats() {
       const div = document.createElement("div");
       div.className = `seat ${seat.status}`;
       div.style.setProperty('--zone-color', style.color);
+      div.dataset.seatId = seat.id;
       div.innerHTML = `<strong>S${seat.id}</strong><small>${seat.zone}</small>`;
+
+      div.onmouseenter = () => highlightMapSeat(seat.id);
+      div.onmouseleave = () => clearMapSeatHighlights();
 
       div.onclick = () => {
         if (seat.status === "available") {

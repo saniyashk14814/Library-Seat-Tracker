@@ -203,10 +203,56 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 12px;
+  text-align: center;
+  font-size: 10px;
+  line-height: 1.1;
   color: var(--muted);
   min-height: 40px;
   aspect-ratio: 1;
+  padding: 4px;
+  overflow: hidden;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+.map-cell.seat-location {
+  padding: 3px;
+}
+
+.map-cell.map-seat-highlight {
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.45);
+  transform: scale(1.03);
+}
+
+.map-seat-ids {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  justify-content: center;
+  align-content: center;
+}
+
+.map-seat-id {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  padding: 1px 3px;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.75);
+  color: #f8fafc;
+  font-size: 8px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.map-seat-id.reserved {
+  background: rgba(234, 179, 8, 0.9);
+  color: #111827;
+}
+
+.map-seat-id.occupied {
+  background: rgba(239, 68, 68, 0.9);
 }
 
 .map-cell.seats {
