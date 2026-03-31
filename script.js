@@ -250,7 +250,7 @@ const studyRoomsSection = document.getElementById("studyRoomsSection");
 const studyRoomsGrid = document.getElementById("studyRoomsGrid");
 const modal = document.getElementById("bookingModal");
 const closeModal = document.querySelector(".close-modal");
-const confirmBooking = document.getElementById("confirmBooking");
+const confirmBookingBtn = document.getElementById("confirmBooking");
 const seatModal = document.getElementById("seatModal");
 const closeSeatModal = document.querySelector(".close-seat-modal");
 const confirmSeatBooking = document.getElementById("confirmSeatBooking");
@@ -335,7 +335,7 @@ const floorMaps = {
       ['group', 'group', 'stacks', 'stacks', 'stacks', 'stacks', 'stacks', 'stacks', 'stacks', 'stacks', 'stacks', 'empty'],
       ['group', 'group', 'group', 'group', 'empty', 'empty', 'empty', 'rooms', 'rooms', 'rooms', 'rooms', 'rooms']
     ],
-    labels: { green: '🌿' }
+    labels: { green: 'Green' }
   },
   9: { // Quiet Study - Books PS8000-T
     layout: [
@@ -364,22 +364,22 @@ const floorMaps = {
 // Cell type to CSS class and display mapping
 const cellStyles = {
   empty: { class: '', label: '' },
-  wc: { class: 'restroom', label: '🚻' },
-  elev: { class: 'stairs', label: '🛗' },
-  stairs: { class: 'stairs', label: '🪜' },
+  wc: { class: 'restroom', label: 'WC' },
+  elev: { class: 'stairs', label: 'EL' },
+  stairs: { class: 'stairs', label: 'ST' },
   seats: { class: 'seats', label: '' },
-  carrels: { class: 'seats carrel', label: '📖' },
-  stacks: { class: 'stacks', label: '📚' },
-  rooms: { class: 'rooms', label: '📚' },
-  group: { class: 'seats group', label: '👥' },
-  computers: { class: 'computers', label: '💻' },
+  carrels: { class: 'seats carrel', label: 'CR' },
+  stacks: { class: 'stacks', label: '' },
+  rooms: { class: 'rooms', label: 'RM' },
+  group: { class: 'seats group', label: 'GP' },
+  computers: { class: 'computers', label: 'PC' },
   study: { class: 'seats', label: '' },
   entrance: { class: 'entrance', label: '↓' },
   exit: { class: 'entrance', label: '←' },
   circ: { class: 'service', label: '' },
-  help: { class: 'service', label: '❓' },
+  help: { class: 'service', label: '?' },
   lab: { class: 'computers', label: '' },
-  printers: { class: 'service', label: '🖨️' },
+  printers: { class: 'service', label: 'PR' },
   gmdc: { class: 'service special', label: '' },
   collab: { class: 'rooms', label: '' },
   lab393: { class: 'computers', label: '' },
@@ -593,6 +593,7 @@ function renderStudyRooms() {
 
     if (room.status === "available") {
       div.onclick = () => openBookingModal(room);
+      div.onkeydown = (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openBookingModal(room); } };
     }
 
     studyRoomsGrid.appendChild(div);
@@ -623,14 +624,14 @@ function openBookingModal(room) {
         document.querySelectorAll(".time-slot").forEach(s => s.classList.remove("selected"));
         div.classList.add("selected");
         selectedTimeSlot = slot;
-        confirmBooking.disabled = false;
+        confirmBookingBtn.disabled = false;
       };
     }
 
     timeSlotsContainer.appendChild(div);
   });
 
-  confirmBooking.disabled = true;
+  confirmBookingBtn.disabled = true;
   modal.style.display = "flex";
 }
 
@@ -657,7 +658,7 @@ window.onclick = (e) => {
 };
 
 // Confirm room booking
-confirmBooking.onclick = async () => {
+confirmBookingBtn.onclick = async () => {
   if (selectedRoom && selectedTimeSlot) {
     // Validation checks
     const requiredRoomError = validateRequired(selectedTimeSlot, 'Time slot');
@@ -719,10 +720,21 @@ function showToast(type, message) {
 
   const toast = document.createElement('div');
   toast.className = `toast ${type}`;
-  toast.innerHTML = `
-    <span class="toast-icon">${type === 'success' ? '✅' : '❌'}</span>
-    <span class="toast-message">${message}</span>
-  `;
+
+  const iconSpan = document.createElement('span');
+  iconSpan.className = 'toast-icon';
+  iconSpan.setAttribute('aria-hidden', 'true');
+  iconSpan.innerHTML = type === 'success'
+    ? '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>'
+    : '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>';
+
+  const msgSpan = document.createElement('span');
+  msgSpan.className = 'toast-message';
+  msgSpan.textContent = message;
+
+  toast.appendChild(iconSpan);
+  toast.appendChild(msgSpan);
+  toast.setAttribute('role', 'alert');
   document.body.appendChild(toast);
 
   setTimeout(() => toast.remove(), 4000);
@@ -930,7 +942,7 @@ function renderMyBookings() {
   if (userBookings.length === 0) {
     list.innerHTML = `
       <div class="no-bookings">
-        <div class="no-bookings-icon">📭</div>
+        <div class="no-bookings-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg></div>
         <p>No bookings yet</p>
         <p style="font-size: 12px;">Book a seat or study room to see it here</p>
       </div>
@@ -950,22 +962,26 @@ function renderMyBookings() {
         const secs = Math.floor((remaining % 60000) / 1000);
         countdownHTML = `
           <div class="grace-period-timer" data-grace-expires="${graceExpires}" data-booking-id="${booking.id}">
-            <span class="timer-icon">⏳</span>
+            <span class="timer-icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
             <span class="timer-text">Confirm within <strong class="timer-countdown">${mins}:${String(secs).padStart(2, '0')}</strong></span>
           </div>
-          <button class="confirm-arrival-btn" onclick="confirmArrival('${booking.id}')">✓ Confirm Arrival</button>
+          <button class="confirm-arrival-btn" onclick="confirmArrival('${booking.id}')">Confirm Arrival</button>
         `;
       } else {
-        countdownHTML = `<div class="grace-period-expired"><span class="timer-icon">⚠️</span> Grace period expired — releasing soon</div>`;
+        countdownHTML = `<div class="grace-period-expired"><span class="timer-icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span> Grace period expired — releasing soon</div>`;
       }
     } else if (isConfirmed) {
-      countdownHTML = `<div class="grace-period-confirmed"><span class="timer-icon">✅</span> Confirmed</div>`;
+      countdownHTML = `<div class="grace-period-confirmed"><span class="timer-icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></span> Confirmed</div>`;
     }
+
+    const typeIcon = booking.type === 'seat'
+      ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px"><path d="M19 9V6a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v3"/><path d="M3 16a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5a2 2 0 0 0-4 0v1H7v-1a2 2 0 0 0-4 0z"/><path d="M5 18v2"/><path d="M19 18v2"/></svg>'
+      : '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>';
 
     return `
       <div class="booking-item ${!isConfirmed && graceExpires ? 'unconfirmed' : ''}">
         <div class="booking-item-info">
-          <div class="booking-item-type">${booking.type === 'seat' ? '🪑 Seat' : '📚 Study Room'}</div>
+          <div class="booking-item-type">${typeIcon} ${booking.type === 'seat' ? 'Seat' : 'Study Room'}</div>
           <div class="booking-item-name">${booking.name}</div>
           <div class="booking-item-details">
             Floor ${booking.floor} • ${booking.timeSlot || booking.time || ''} ${booking.endTime ? '- ' + booking.endTime : ''} (${booking.duration})
@@ -1120,18 +1136,21 @@ async function confirmArrival(bookingId) {
   }
 }
 
+// SVG icon helper
+const svgIcon = (path, size = 24) => `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${path}</svg>`;
+
 // Seat zone/category icons and colors
 const zoneStyles = {
-  'Carrel': { icon: '📖', color: '#22c55e', label: 'Study Carrels', desc: 'Private enclosed desks with walls' },
-  'Window': { icon: '🪟', color: '#22c55e', label: 'Window Seats', desc: 'Natural light seating' },
-  'Quiet': { icon: '🤫', color: '#22c55e', label: 'Quiet Zone', desc: 'Silent individual study' },
-  'Silent': { icon: '🔇', color: '#22c55e', label: 'Silent Zone', desc: 'Absolute silence required' },
-  'Group': { icon: '👥', color: '#3b82f6', label: 'Group Seating', desc: 'Collaborative spaces' },
-  'Individual': { icon: '🧑', color: '#22c55e', label: 'Individual Seats', desc: 'Single person desks' },
-  'Computer': { icon: '💻', color: '#8b5cf6', label: 'Computer Stations', desc: 'Desktop computers' },
-  'Desktop': { icon: '🖥️', color: '#8b5cf6', label: 'Desktop Workstations', desc: 'Computer workstations' },
-  'Lab': { icon: '🔬', color: '#8b5cf6', label: 'Lab Seating', desc: 'Computer lab spaces' },
-  'Open': { icon: '🪑', color: '#22c55e', label: 'Open Seating', desc: 'Flexible open spaces' }
+  'Carrel': { icon: svgIcon('<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>'), color: '#22c55e', label: 'Study Carrels', desc: 'Private enclosed desks with walls' },
+  'Window': { icon: svgIcon('<rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>'), color: '#22c55e', label: 'Window Seats', desc: 'Natural light seating' },
+  'Quiet': { icon: svgIcon('<path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/>'), color: '#22c55e', label: 'Quiet Zone', desc: 'Silent individual study' },
+  'Silent': { icon: svgIcon('<path d="M11 5L6 9H2v6h4l5 4V5z"/>'), color: '#22c55e', label: 'Silent Zone', desc: 'Absolute silence required' },
+  'Group': { icon: svgIcon('<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>'), color: '#3b82f6', label: 'Group Seating', desc: 'Collaborative spaces' },
+  'Individual': { icon: svgIcon('<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>'), color: '#22c55e', label: 'Individual Seats', desc: 'Single person desks' },
+  'Computer': { icon: svgIcon('<rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>'), color: '#8b5cf6', label: 'Computer Stations', desc: 'Desktop computers' },
+  'Desktop': { icon: svgIcon('<rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>'), color: '#8b5cf6', label: 'Desktop Workstations', desc: 'Computer workstations' },
+  'Lab': { icon: svgIcon('<rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>'), color: '#8b5cf6', label: 'Lab Seating', desc: 'Computer lab spaces' },
+  'Open': { icon: svgIcon('<path d="M19 9V6a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v3"/><path d="M3 16a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5a2 2 0 0 0-4 0v1H7v-1a2 2 0 0 0-4 0z"/><path d="M5 18v2"/><path d="M19 18v2"/>'), color: '#22c55e', label: 'Open Seating', desc: 'Flexible open spaces' }
 };
 
 // Render seats grouped by category
@@ -1180,12 +1199,17 @@ function renderSeats() {
       div.className = `seat ${seat.status}`;
       div.style.setProperty('--zone-color', style.color);
       div.dataset.seatId = seat.id;
+      div.setAttribute('tabindex', '0');
+      div.setAttribute('role', 'button');
+      div.setAttribute('aria-label', `Seat S${seat.id}, ${seat.zone}, ${seat.status}`);
       div.innerHTML = `<strong>S${seat.id}</strong><small>${seat.zone}</small>`;
 
       div.onmouseenter = () => highlightMapSeat(seat.id);
       div.onmouseleave = () => clearMapSeatHighlights();
+      div.onfocus = () => highlightMapSeat(seat.id);
+      div.onblur = () => clearMapSeatHighlights();
 
-      div.onclick = () => {
+      const handleSeatAction = () => {
         if (seat.status === "available") {
           openSeatBookingModal(seat);
         } else if (seat.status === "reserved") {
@@ -1199,6 +1223,9 @@ function renderSeats() {
           }
         }
       };
+
+      div.onclick = handleSeatAction;
+      div.onkeydown = (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSeatAction(); } };
 
       seatsGrid.appendChild(div);
     });
@@ -1220,6 +1247,91 @@ function render() {
   renderStudyRooms();
   renderSeats();
 }
+
+// Keyboard event: ESC closes any open modal
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    if (modal.style.display === 'flex') {
+      modal.style.display = 'none';
+      selectedRoom = null;
+      selectedTimeSlot = null;
+    }
+    if (seatModal.style.display === 'flex') {
+      closeSeatBookingModal();
+    }
+    if (myBookingsModal.style.display === 'flex') {
+      myBookingsModal.style.display = 'none';
+    }
+  }
+});
+
+// Focus trap: keep focus within open modal
+function trapFocus(modalEl) {
+  const focusable = modalEl.querySelectorAll(
+    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+  );
+  if (focusable.length === 0) return;
+  const first = focusable[0];
+  const last = focusable[focusable.length - 1];
+  first.focus();
+
+  modalEl._focusTrapHandler = function (e) {
+    if (e.key !== 'Tab') return;
+    if (e.shiftKey) {
+      if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+    } else {
+      if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+  };
+  modalEl.addEventListener('keydown', modalEl._focusTrapHandler);
+}
+
+function releaseFocusTrap(modalEl) {
+  if (modalEl._focusTrapHandler) {
+    modalEl.removeEventListener('keydown', modalEl._focusTrapHandler);
+    modalEl._focusTrapHandler = null;
+  }
+}
+
+// Wrap modal open functions to add focus trap
+const _origOpenBookingModal = openBookingModal;
+openBookingModal = function(room) {
+  _origOpenBookingModal(room);
+  trapFocus(modal);
+};
+
+const _origOpenSeatBookingModal = openSeatBookingModal;
+openSeatBookingModal = function(seat) {
+  _origOpenSeatBookingModal(seat);
+  trapFocus(seatModal);
+};
+
+// Patch close handlers to release focus trap
+const _origCloseModal = closeModal.onclick;
+closeModal.onclick = () => { releaseFocusTrap(modal); _origCloseModal(); };
+
+const _origCloseSeatModal = closeSeatModal.onclick;
+closeSeatModal.onclick = () => { releaseFocusTrap(seatModal); _origCloseSeatModal(); };
+
+const _origCloseBookingsModal = closeBookingsModal.onclick;
+closeBookingsModal.onclick = () => { releaseFocusTrap(myBookingsModal); _origCloseBookingsModal(); };
+
+// Keyboard support for bookings button
+userBookingsBtn.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' || e.key === ' ') {
+    e.preventDefault();
+    renderMyBookings();
+    myBookingsModal.style.display = 'flex';
+    trapFocus(myBookingsModal);
+  }
+});
+
+// Wrap bookings button click to add focus trap
+const _origBookingsBtnClick = userBookingsBtn.onclick;
+userBookingsBtn.onclick = () => {
+  _origBookingsBtnClick();
+  trapFocus(myBookingsModal);
+};
 
 // Floor button click handlers
 document.querySelectorAll("[data-floor]").forEach(btn => {
