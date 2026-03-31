@@ -1060,3 +1060,323 @@ footer {
 .seat.available:hover::after {
   opacity: 1;
 }
+
+/* ========== Responsive: phones (max-width 600px) ========== */
+@media (max-width: 600px) {
+
+  /* --- Header --- */
+  header {
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 10px 12px;
+  }
+
+  .header-left {
+    gap: 10px;
+    min-width: 0;
+  }
+
+  .tmu-logo {
+    height: 28px;
+  }
+
+  h1 {
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .header-right {
+    gap: 8px;
+    margin-left: auto;
+  }
+
+  .user-bookings {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+
+  #currentFloor {
+    padding: 4px 8px;
+    font-size: 12px;
+  }
+
+  /* --- Layout: stack sidebar above main --- */
+  .container {
+    grid-template-columns: 1fr;
+  }
+
+  aside {
+    border-right: none;
+    border-bottom: 1px solid #1f2937;
+    padding: 12px;
+    max-height: 200px;
+    overflow-y: auto;
+  }
+
+  .section:first-child .btn {
+    display: inline-block;
+    width: auto;
+    padding: 8px 12px;
+    margin-bottom: 0;
+    margin-right: 6px;
+    font-size: 12px;
+  }
+
+  .legend-sidebar {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  /* --- Main content --- */
+  main {
+    padding: 12px;
+  }
+
+  .floor-info {
+    padding: 12px;
+    margin-bottom: 14px;
+  }
+
+  .floor-info h2 {
+    font-size: 16px;
+  }
+
+  .floor-info p {
+    font-size: 13px;
+  }
+
+  /* --- Floor Map Grid --- */
+  .floor-map {
+    padding: 12px;
+    margin-bottom: 14px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .floor-map-grid {
+    grid-template-columns: repeat(12, 36px);
+    gap: 4px;
+    min-width: 440px;
+  }
+
+  .map-cell {
+    font-size: 8px;
+    min-height: 36px;
+    padding: 3px;
+  }
+
+  .map-seat-id {
+    font-size: 7px;
+    min-width: 15px;
+    padding: 1px 2px;
+  }
+
+  .map-legend {
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .map-legend span {
+    font-size: 10px;
+  }
+
+  /* --- Study Rooms --- */
+  .study-rooms-section {
+    padding: 14px;
+    margin-bottom: 14px;
+  }
+
+  .study-rooms-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .study-room {
+    padding: 12px;
+  }
+
+  .study-room-name {
+    font-size: 13px;
+  }
+
+  /* --- Seat Categories --- */
+  .seat-category {
+    padding: 14px;
+    border-radius: 12px;
+  }
+
+  .category-title {
+    gap: 8px;
+  }
+
+  .category-icon {
+    font-size: 20px;
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+  }
+
+  .category-title h4 {
+    font-size: 14px;
+  }
+
+  .category-count {
+    font-size: 11px;
+    padding: 3px 8px;
+  }
+
+  .category-desc {
+    padding-left: 0;
+    font-size: 12px;
+    margin-top: 4px;
+  }
+
+  .category-seats-grid,
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(65px, 1fr));
+    gap: 8px;
+  }
+
+  .seat {
+    padding: 10px 6px;
+    border-radius: 10px;
+  }
+
+  .seat strong {
+    font-size: 12px;
+  }
+
+  .seat small {
+    font-size: 9px;
+  }
+
+  /* Hide hover tooltip on touch devices */
+  .seat.available::after {
+    display: none;
+  }
+
+  /* --- Modals --- */
+  .modal-content {
+    width: 94%;
+    padding: 18px;
+    border-radius: 14px;
+    max-height: 85vh;
+  }
+
+  .modal-content h2 {
+    font-size: 16px;
+    padding-right: 24px;
+  }
+
+  /* Seat booking modal */
+  .seat-modal-content {
+    max-width: none;
+  }
+
+  .seat-icon-large {
+    font-size: 36px;
+  }
+
+  .seat-modal-header h2 {
+    font-size: 18px;
+  }
+
+  .seat-info-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .seat-info-item {
+    padding: 10px;
+  }
+
+  .info-label {
+    font-size: 10px;
+  }
+
+  .info-value {
+    font-size: 13px;
+  }
+
+  .duration-options {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+  }
+
+  .duration-btn {
+    padding: 10px 6px;
+    font-size: 12px;
+  }
+
+  .time-slots-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+  }
+
+  .time-slot {
+    padding: 8px 4px;
+    font-size: 11px;
+  }
+
+  /* Room booking modal */
+  .bookings-modal-content {
+    max-width: none;
+  }
+
+  /* --- My Bookings --- */
+  .booking-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px;
+  }
+
+  .booking-item-name {
+    font-size: 14px;
+    word-break: break-word;
+  }
+
+  .cancel-booking {
+    width: 100%;
+    text-align: center;
+    padding: 10px 14px;
+  }
+
+  .confirm-arrival-btn {
+    padding: 10px 14px;
+    font-size: 12px;
+  }
+
+  .grace-period-timer,
+  .grace-period-expired,
+  .grace-period-confirmed {
+    font-size: 11px;
+    padding: 5px 8px;
+  }
+
+  /* --- Toast Notification --- */
+  .toast {
+    left: 12px;
+    right: 12px;
+    bottom: 16px;
+    padding: 12px 16px;
+    border-radius: 10px;
+  }
+
+  .toast-icon {
+    font-size: 20px;
+  }
+
+  .toast-message {
+    font-size: 13px;
+  }
+
+  /* --- Footer --- */
+  footer {
+    padding: 10px 12px;
+    font-size: 11px;
+  }
+}
