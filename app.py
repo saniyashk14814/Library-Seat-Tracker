@@ -17,6 +17,7 @@ CORS(app)
 
 # Data file path
 DATA_FILE = 'data.json'
+data_lock = threading.Lock()
 
 # Grace period for unconfirmed reservations (in minutes)
 GRACE_PERIOD_MINUTES = int(os.environ.get('GRACE_PERIOD_MINUTES', 10))
@@ -107,20 +108,22 @@ STUDY_ROOMS_CONFIG = {
 
 
 def load_data():
-    """Load data from JSON file"""
-    if os.path.exists(DATA_FILE):
-        try:
-            with open(DATA_FILE, 'r') as f:
-                return json.load(f)
-        except json.JSONDecodeError:
-            return DEFAULT_DATA.copy()
-    return DEFAULT_DATA.copy()
+    """Load data from JSON file (thread-safe)"""
+    with data_lock:
+        if os.path.exists(DATA_FILE):
+            try:
+                with open(DATA_FILE, 'r') as f:
+                    return json.load(f)
+            except json.JSONDecodeError:
+                return DEFAULT_DATA.copy()
+        return DEFAULT_DATA.copy()
 
 
 def save_data(data):
-    """Save data to JSON file"""
-    with open(DATA_FILE, 'w') as f:
-        json.dump(data, f, indent=2, default=str)
+    """Save data to JSON file (thread-safe)"""
+    with data_lock:
+        with open(DATA_FILE, 'w') as f:
+            json.dump(data, f, indent=2, default=str)
 
 
 def initialize_data():
