@@ -1365,20 +1365,42 @@ document.querySelectorAll("[data-floor]").forEach(btn => {
 //initializeData();
 
 
-/// ─── Deep Link / QR Code Routing ────────────────────────────────────────────
+// ─── Deep Link / QR Code Routing (hash-based) ────────────────────────────────
+// Uses window.location.hash so the URL always updates in the address bar,
+// even on static hosts like Render, GitHub Pages, Netlify, etc.
+// Format:  #floor=5&seat=12   or   #floor=5&room=LIB-550
  
-/**
- * Copy text to clipboard and show a toast.
- */
+function setHash(params) {
+  // params: object e.g. {floor: 5, seat: 12}
+  const str = Object.entries(params).map(([k,v]) => `${k}=${v}`).join('&');
+  history.replaceState(null, '', '#' + str);
+}
+ 
+function clearHash() {
+  history.replaceState(null, '', window.location.pathname + window.location.search);
+}
+ 
+function parseHash() {
+  const hash = window.location.hash.replace('#', '');
+  if (!hash) return {};
+  return Object.fromEntries(hash.split('&').map(p => p.split('=')));
+}
+ 
+function getSeatUrl(floor, seatId) {
+  return window.location.origin + window.location.pathname + `#floor=${floor}&seat=${seatId}`;
+}
+ 
+function getRoomUrl(floor, roomId) {
+  return window.location.origin + window.location.pathname + `#floor=${floor}&room=${roomId}`;
+}
+ 
 function copyToClipboard(text, successMsg) {
   navigator.clipboard.writeText(text).then(() => {
     showToast('success', successMsg || 'Copied!');
   }).catch(() => {
-    // Fallback for older browsers
     const ta = document.createElement('textarea');
     ta.value = text;
-    ta.style.position = 'fixed';
-    ta.style.opacity = '0';
+    ta.style.cssText = 'position:fixed;opacity:0';
     document.body.appendChild(ta);
     ta.select();
     document.execCommand('copy');
@@ -1387,56 +1409,53 @@ function copyToClipboard(text, successMsg) {
   });
 }
  
-/**
- * Returns a shareable URL for a seat or room.
- *   Seat:  ?floor=5&seat=12
- *   Room:  ?floor=5&room=LIB-550
- */
-function getSeatUrl(floor, seatId) {
-  const url = new URL(window.location.href);
-  url.search = '';
-  url.searchParams.set('floor', floor);
-  url.searchParams.set('seat', seatId);
-  return url.toString();
-}
+// Patch openSeatBookingModal to always update the hash
+const _origOpenSeatModal = openSeatBookingModal;
+openSeatBookingModal = function(seat) {
+  setHash({ floor: currentFloor, seat: seat.id });
+  _origOpenSeatModal(seat);
+};
  
-function getRoomUrl(floor, roomId) {
-  const url = new URL(window.location.href);
-  url.search = '';
-  url.searchParams.set('floor', floor);
-  url.searchParams.set('room', roomId);
-  return url.toString();
-}
+// Patch closeSeatBookingModal to always clear the hash
+const _origCloseSeatModal2 = closeSeatBookingModal;
+closeSeatBookingModal = function() {
+  clearHash();
+  _origCloseSeatModal2();
+};
+ 
+// Patch openBookingModal to update hash for rooms
+const _origOpenRoomModal = openBookingModal;
+openBookingModal = function(room) {
+  setHash({ floor: currentFloor, room: room.id });
+  _origOpenRoomModal(room);
+};
  
 /**
- * On page load, check for deep-link query params and navigate to the
- * requested floor + open the correct seat/room modal automatically.
+ * On page load, read the hash and open the right floor + modal.
  */
 async function handleDeepLink() {
-  const params = new URLSearchParams(window.location.search);
-  const floorParam = params.get('floor');
-  const seatParam  = params.get('seat');
-  const roomParam  = params.get('room');
+  const params = parseHash();
+  const floorParam = params.floor;
+  const seatParam  = params.seat;
+  const roomParam  = params.room;
  
-  if (!floorParam) return; // No deep link present
+  if (!floorParam) return;
  
   const targetFloor = Number(floorParam);
-  if (!floorConfig[targetFloor]) return; // Invalid floor
+  if (!floorConfig[targetFloor]) return;
  
-  // Switch to the requested floor
   currentFloor = targetFloor;
   document.querySelectorAll('[data-floor]').forEach(btn => {
     btn.classList.toggle('active', Number(btn.dataset.floor) === targetFloor);
   });
   render();
  
+  await new Promise(r => setTimeout(r, 150));
+ 
   if (seatParam) {
     const seatId = Number(seatParam);
-    // Small delay so render() has finished painting
-    await new Promise(r => setTimeout(r, 150));
     const seat = (floors[currentFloor] || []).find(s => s.id === seatId);
     if (seat) {
-      // Scroll the seat card into view
       const seatEl = document.querySelector(`[data-seat-id="${seatId}"]`);
       if (seatEl) seatEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
       openSeatBookingModal(seat);
@@ -1446,7 +1465,6 @@ async function handleDeepLink() {
   }
  
   if (roomParam && floorConfig[targetFloor].hasStudyRooms) {
-    await new Promise(r => setTimeout(r, 150));
     const room = (studyRooms[currentFloor] || []).find(r => r.id === roomParam);
     if (room) {
       openBookingModal(room);
