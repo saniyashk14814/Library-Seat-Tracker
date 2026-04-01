@@ -1362,10 +1362,10 @@ document.querySelectorAll("[data-floor]").forEach(btn => {
 });
 
 // Initial data load
-initializeData();
+//initializeData();
 
 
-// ─── Deep Link / QR Code Routing ────────────────────────────────────────────
+/// ─── Deep Link / QR Code Routing ────────────────────────────────────────────
  
 /**
  * Copy text to clipboard and show a toast.
