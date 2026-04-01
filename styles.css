@@ -1895,3 +1895,36 @@ footer {
     font-size: 12px;
   }
 }
+
+.seat {
+  position: relative;
+}
+ 
+.seat-qr-btn {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  padding: 2px 3px;
+  background: transparent;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.15s, background 0.15s;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+ 
+.seat:hover .seat-qr-btn,
+.seat:focus-within .seat-qr-btn {
+  opacity: 1;
+}
+ 
+.seat-qr-btn:hover {
+  background: rgba(0,0,0,0.07);
+  color: var(--text);
+}
+ 

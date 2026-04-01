@@ -1363,3 +1363,99 @@ document.querySelectorAll("[data-floor]").forEach(btn => {
 
 // Initial data load
 initializeData();
+
+
+// ─── Deep Link / QR Code Routing ────────────────────────────────────────────
+ 
+/**
+ * Copy text to clipboard and show a toast.
+ */
+function copyToClipboard(text, successMsg) {
+  navigator.clipboard.writeText(text).then(() => {
+    showToast('success', successMsg || 'Copied!');
+  }).catch(() => {
+    // Fallback for older browsers
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    showToast('success', successMsg || 'Copied!');
+  });
+}
+ 
+/**
+ * Returns a shareable URL for a seat or room.
+ *   Seat:  ?floor=5&seat=12
+ *   Room:  ?floor=5&room=LIB-550
+ */
+function getSeatUrl(floor, seatId) {
+  const url = new URL(window.location.href);
+  url.search = '';
+  url.searchParams.set('floor', floor);
+  url.searchParams.set('seat', seatId);
+  return url.toString();
+}
+ 
+function getRoomUrl(floor, roomId) {
+  const url = new URL(window.location.href);
+  url.search = '';
+  url.searchParams.set('floor', floor);
+  url.searchParams.set('room', roomId);
+  return url.toString();
+}
+ 
+/**
+ * On page load, check for deep-link query params and navigate to the
+ * requested floor + open the correct seat/room modal automatically.
+ */
+async function handleDeepLink() {
+  const params = new URLSearchParams(window.location.search);
+  const floorParam = params.get('floor');
+  const seatParam  = params.get('seat');
+  const roomParam  = params.get('room');
+ 
+  if (!floorParam) return; // No deep link present
+ 
+  const targetFloor = Number(floorParam);
+  if (!floorConfig[targetFloor]) return; // Invalid floor
+ 
+  // Switch to the requested floor
+  currentFloor = targetFloor;
+  document.querySelectorAll('[data-floor]').forEach(btn => {
+    btn.classList.toggle('active', Number(btn.dataset.floor) === targetFloor);
+  });
+  render();
+ 
+  if (seatParam) {
+    const seatId = Number(seatParam);
+    // Small delay so render() has finished painting
+    await new Promise(r => setTimeout(r, 150));
+    const seat = (floors[currentFloor] || []).find(s => s.id === seatId);
+    if (seat) {
+      // Scroll the seat card into view
+      const seatEl = document.querySelector(`[data-seat-id="${seatId}"]`);
+      if (seatEl) seatEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      openSeatBookingModal(seat);
+    } else {
+      showToast('error', `Seat S${seatId} not found on Floor ${targetFloor}`);
+    }
+  }
+ 
+  if (roomParam && floorConfig[targetFloor].hasStudyRooms) {
+    await new Promise(r => setTimeout(r, 150));
+    const room = (studyRooms[currentFloor] || []).find(r => r.id === roomParam);
+    if (room) {
+      openBookingModal(room);
+    } else {
+      showToast('error', `Room ${roomParam} not found on Floor ${targetFloor}`);
+    }
+  }
+}
+ 
+// ─── Initial data load ───────────────────────────────────────────────────────
+initializeData().then(() => handleDeepLink());
+ 
